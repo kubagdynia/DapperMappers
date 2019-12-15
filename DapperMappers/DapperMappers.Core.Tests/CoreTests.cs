@@ -68,8 +68,8 @@ namespace DapperMappers.Core.Tests
 
                     // Assert
                     retrievedTestObject.Should().NotBeNull();
-                    retrievedTestObject.Should().BeEquivalentTo(retrievedTestObject);
-                    retrievedTestObject.Content.Should().BeEquivalentTo(retrievedTestObject.Content);
+                    retrievedTestObject.Should().BeEquivalentTo(testObject);
+                    retrievedTestObject.Content.Should().BeEquivalentTo(testObject.Content);
                 }
                 finally
                 {
