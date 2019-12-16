@@ -137,8 +137,8 @@ namespace DapperMappers.Core.Tests
                     };
 
                     // Act
-                    testObjectRepository.SaveTestObject2(testObject);
-                    TestJsonObject retrievedTestObject = testObjectRepository.GetTestObject2(testObject.Id);
+                    testObjectRepository.SaveTestJsonObject(testObject);
+                    TestJsonObject retrievedTestObject = testObjectRepository.GetTestJsonObject(testObject.Id);
 
                     // Assert
                     retrievedTestObject.Should().NotBeNull();

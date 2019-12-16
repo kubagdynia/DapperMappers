@@ -14,8 +14,8 @@ namespace DapperMappers.Core.Tests.Repositories
         void ConnectToDb(ISqLiteDbManagement dbManagement);
         TestXmlObject GetTestObject(long id);
         void SaveTestObject(TestXmlObject testObject);
-        TestJsonObject GetTestObject2(long id);
-        void SaveTestObject2(TestJsonObject testObject);
+        TestJsonObject GetTestJsonObject(long id);
+        void SaveTestJsonObject(TestJsonObject testObject);
     }
 
     public class TestObjectRepository : ITestObjectRepository
@@ -53,7 +53,7 @@ namespace DapperMappers.Core.Tests.Repositories
             }
         }
         
-        public TestJsonObject GetTestObject2(long id)
+        public TestJsonObject GetTestJsonObject(long id)
         {
             using (var conn = _dbManagement.SimpleDbConnection())
             {
@@ -66,7 +66,7 @@ namespace DapperMappers.Core.Tests.Repositories
             }
         }
 
-        public void SaveTestObject2(TestJsonObject testObject)
+        public void SaveTestJsonObject(TestJsonObject testObject)
         {
             using (var cnn = _dbManagement.SimpleDbConnection())
             {
