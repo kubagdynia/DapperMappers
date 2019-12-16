@@ -11,26 +11,28 @@ namespace DapperMappers.Core.Tests.Repositories
 {
     public interface ITestObjectRepository
     {
-        void ConnectToDb(ISQLiteDbManagement dbManagement);
-        TestObject GetTestObject(long id);
-        void SaveTestObject(TestObject testObject);
+        void ConnectToDb(ISqLiteDbManagement dbManagement);
+        TestXmlObject GetTestObject(long id);
+        void SaveTestObject(TestXmlObject testObject);
+        TestJsonObject GetTestObject2(long id);
+        void SaveTestObject2(TestJsonObject testObject);
     }
 
     public class TestObjectRepository : ITestObjectRepository
     {
-        private ISQLiteDbManagement _dbManagement;
+        private ISqLiteDbManagement _dbManagement;
 
-        public void ConnectToDb(ISQLiteDbManagement dbManagement)
+        public void ConnectToDb(ISqLiteDbManagement dbManagement)
         {
             _dbManagement = dbManagement;
         }
 
-        public TestObject GetTestObject(long id)
+        public TestXmlObject GetTestObject(long id)
         {
             using (var conn = _dbManagement.SimpleDbConnection())
             {
                 conn.Open();
-                TestObject result = conn.Query<TestObject>(
+                TestXmlObject result = conn.Query<TestXmlObject>(
                     @"SELECT Id, FirstName, LastName, StartWork, Content
                     FROM Test_Objects
                     WHERE Id = @id", new { id }).FirstOrDefault();
@@ -38,7 +40,7 @@ namespace DapperMappers.Core.Tests.Repositories
             }
         }
 
-        public void SaveTestObject(TestObject testObject)
+        public void SaveTestObject(TestXmlObject testObject)
         {
             using (var cnn = _dbManagement.SimpleDbConnection())
             {
@@ -50,49 +52,31 @@ namespace DapperMappers.Core.Tests.Repositories
                     select last_insert_rowid()", testObject).First();
             }
         }
-    }
-
-    public interface ISQLiteDbManagement
-    {
-        SQLiteConnection SimpleDbConnection();
-        void DeleteDb();
-        string CreateDb(Action<SQLiteConnection> execute);
-    }
-
-    public class SQLiteDbManagement : ISQLiteDbManagement
-    {
-        private string _dbFilename;
-
-        public SQLiteConnection SimpleDbConnection()
+        
+        public TestJsonObject GetTestObject2(long id)
         {
-            return new SQLiteConnection($"Data Source={_dbFilename}");
-        }
-
-        public string CreateDb(Action<SQLiteConnection> execute)
-        {
-            DeleteDb();
-            CreateDbFileName();
-
-            using (SQLiteConnection conn = SimpleDbConnection())
+            using (var conn = _dbManagement.SimpleDbConnection())
             {
                 conn.Open();
-                execute(conn);
+                TestJsonObject result = conn.Query<TestJsonObject>(
+                    @"SELECT Id, FirstName, LastName, StartWork, Content
+                    FROM Test_Objects
+                    WHERE Id = @id", new { id }).FirstOrDefault();
+                return result;
             }
-
-            return _dbFilename;
         }
 
-        public void DeleteDb()
+        public void SaveTestObject2(TestJsonObject testObject)
         {
-            if (File.Exists(_dbFilename))
+            using (var cnn = _dbManagement.SimpleDbConnection())
             {
-                File.Delete(_dbFilename);
+                cnn.Open();
+                testObject.Id = cnn.Query<long>(
+                    @"INSERT INTO Test_Objects 
+                    ( FirstName, LastName, StartWork, Content) VALUES 
+                    ( @FirstName, @LastName, @StartWork, @Content );
+                    select last_insert_rowid()", testObject).First();
             }
-        }
-
-        private void CreateDbFileName()
-        {
-            _dbFilename = Path.Combine(Environment.CurrentDirectory, $"TestDb_{Guid.NewGuid()}.sqlite");
         }
     }
 }
