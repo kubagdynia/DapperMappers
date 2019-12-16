@@ -15,6 +15,8 @@ namespace DapperMappers.Core.TypeHandlers
             OmitXmlDeclaration = true
         };
 
+        private static readonly XmlSerializerNamespaces WithoutNamespaces = new XmlSerializerNamespaces(new[] { XmlQualifiedName.Empty });
+
         public object Parse(Type destinationType, object value)
         {
             if (!typeof(IXmlObjectType).IsAssignableFrom(destinationType))
@@ -45,7 +47,7 @@ namespace DapperMappers.Core.TypeHandlers
             {
                 using (XmlWriter writer = XmlWriter.Create(stream, XmlWriterSettings))
                 {
-                    serializer.Serialize(writer, value);
+                    serializer.Serialize(writer, value, WithoutNamespaces);
                     return stream.ToString();
                 }
             }
