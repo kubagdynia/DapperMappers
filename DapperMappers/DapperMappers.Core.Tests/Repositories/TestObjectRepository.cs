@@ -1,17 +1,13 @@
 ﻿using Dapper;
+using DapperMappers.Core.DbConnection;
 using DapperMappers.Core.Tests.Models;
-using System;
-using System.Collections.Generic;
-using System.Data.SQLite;
-using System.IO;
+using System.Data;
 using System.Linq;
-using System.Text;
 
 namespace DapperMappers.Core.Tests.Repositories
 {
     public interface ITestObjectRepository
     {
-        void ConnectToDb(ISqLiteDbManagement dbManagement);
         TestXmlObject GetTestObject(long id);
         void SaveTestObject(TestXmlObject testObject);
         TestJsonObject GetTestJsonObject(long id);
@@ -20,63 +16,48 @@ namespace DapperMappers.Core.Tests.Repositories
 
     public class TestObjectRepository : ITestObjectRepository
     {
-        private ISqLiteDbManagement _dbManagement;
+        private IDbConnection _connection;
 
-        public void ConnectToDb(ISqLiteDbManagement dbManagement)
+        public TestObjectRepository(IDbConnectionFactory connectionFactory)
         {
-            _dbManagement = dbManagement;
+            _connection = connectionFactory.Connection();
         }
 
         public TestXmlObject GetTestObject(long id)
         {
-            using (var conn = _dbManagement.SimpleDbConnection())
-            {
-                conn.Open();
-                TestXmlObject result = conn.Query<TestXmlObject>(
-                    @"SELECT Id, FirstName, LastName, StartWork, Content
+            TestXmlObject result = _connection.Query<TestXmlObject>(
+                @"SELECT Id, FirstName, LastName, StartWork, Content
                     FROM Test_Objects
                     WHERE Id = @id", new { id }).FirstOrDefault();
-                return result;
-            }
+            return result;
         }
 
         public void SaveTestObject(TestXmlObject testObject)
         {
-            using (var cnn = _dbManagement.SimpleDbConnection())
-            {
-                cnn.Open();
-                testObject.Id = cnn.Query<long>(
-                    @"INSERT INTO Test_Objects 
+            testObject.Id = _connection.Query<long>(
+                @"INSERT INTO Test_Objects 
                     ( FirstName, LastName, StartWork, Content) VALUES 
                     ( @FirstName, @LastName, @StartWork, @Content );
                     select last_insert_rowid()", testObject).First();
-            }
         }
-        
+
         public TestJsonObject GetTestJsonObject(long id)
         {
-            using (var conn = _dbManagement.SimpleDbConnection())
-            {
-                conn.Open();
-                TestJsonObject result = conn.Query<TestJsonObject>(
-                    @"SELECT Id, FirstName, LastName, StartWork, Content
+            
+            TestJsonObject result = _connection.Query<TestJsonObject>(
+                @"SELECT Id, FirstName, LastName, StartWork, Content
                     FROM Test_Objects
                     WHERE Id = @id", new { id }).FirstOrDefault();
-                return result;
-            }
+            return result;
         }
 
         public void SaveTestJsonObject(TestJsonObject testObject)
         {
-            using (var cnn = _dbManagement.SimpleDbConnection())
-            {
-                cnn.Open();
-                testObject.Id = cnn.Query<long>(
-                    @"INSERT INTO Test_Objects 
+            testObject.Id = _connection.Query<long>(
+                @"INSERT INTO Test_Objects 
                     ( FirstName, LastName, StartWork, Content) VALUES 
                     ( @FirstName, @LastName, @StartWork, @Content );
                     select last_insert_rowid()", testObject).First();
-            }
         }
     }
 }

@@ -3,11 +3,12 @@ using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
 using DapperMappers.Core.Extensions;
 using DapperMappers.Core.Tests.Repositories;
-using Dapper;
 using DapperMappers.Core.Tests.Models;
 using System;
 using System.Reflection;
 using System.Collections.Generic;
+using DapperMappers.Core.DbConnection;
+using DapperMappers.Core.Tests.DbConnection;
 
 namespace DapperMappers.Core.Tests
 {
@@ -30,61 +31,38 @@ namespace DapperMappers.Core.Tests
             {
                 var scopedServices = scope.ServiceProvider;
 
-                ISqLiteDbManagement dbManagement = scopedServices.GetRequiredService<ISqLiteDbManagement>();
+                ITestObjectRepository testObjectRepository = scopedServices.GetRequiredService<ITestObjectRepository>();
 
-                try
+                TestXmlObject testObject = new TestXmlObject
                 {
-                    dbManagement.CreateDb(conn =>
+                    FirstName = "John",
+                    LastName = "Doe",
+                    StartWork = new DateTime(2018, 06, 01),
+                    Content = new TestXmlContentObject
                     {
-                        conn.Execute(
-                            @"create table Test_Objects
-                              (
-                                 ID                                  integer primary key AUTOINCREMENT,
-                                 FirstName                           varchar(100) not null,
-                                 LastName                            varchar(100) not null,
-                                 StartWork                           datetime not null,
-                                 Content                             TEXT
-                              )");
-                    });
-
-                    ITestObjectRepository testObjectRepository = scopedServices.GetRequiredService<ITestObjectRepository>();
-                    testObjectRepository.ConnectToDb(dbManagement);
-
-                    TestXmlObject testObject = new TestXmlObject
-                    {
-                        FirstName = "John",
-                        LastName = "Doe",
-                        StartWork = new DateTime(2018, 06, 01),
-                        Content = new TestXmlContentObject
-                        {
-                            Nick = "JD",
-                            DateOfBirth = new DateTime(1990, 10, 11),
-                            Siblings = 2,
-                            FavoriteDaysOfTheWeek = new List<string>
+                        Nick = "JD",
+                        DateOfBirth = new DateTime(1990, 10, 11),
+                        Siblings = 2,
+                        FavoriteDaysOfTheWeek = new List<string>
                             {
                                 "Friday",
                                 "Saturday"
                             },
-                            FavoriteNumbers = new List<int> { -502, 444, 0, 777777 }
-                        }
-                    };
+                        FavoriteNumbers = new List<int> { -502, 444, 0, 777777 }
+                    }
+                };
 
-                    // Act
-                    testObjectRepository.SaveTestObject(testObject);
-                    TestXmlObject retrievedTestObject = testObjectRepository.GetTestObject(testObject.Id);
+                // Act
+                testObjectRepository.SaveTestObject(testObject);
+                TestXmlObject retrievedTestObject = testObjectRepository.GetTestObject(testObject.Id);
 
-                    // Assert
-                    retrievedTestObject.Should().NotBeNull();
-                    retrievedTestObject.Should().BeEquivalentTo(testObject);
-                    retrievedTestObject.Content.Should().BeEquivalentTo(testObject.Content);
-                }
-                finally
-                {
-                    dbManagement.DeleteDb();
-                }
+                // Assert
+                retrievedTestObject.Should().NotBeNull();
+                retrievedTestObject.Should().BeEquivalentTo(testObject);
+                retrievedTestObject.Content.Should().BeEquivalentTo(testObject.Content);
             }
         }
-        
+
         [Test]
         public void Json_Data_Saved_In_DataBase_Should_Be_Properly_Restored()
         {
@@ -96,59 +74,36 @@ namespace DapperMappers.Core.Tests
             {
                 var scopedServices = scope.ServiceProvider;
 
-                ISqLiteDbManagement dbManagement = scopedServices.GetRequiredService<ISqLiteDbManagement>();
+                ITestObjectRepository testObjectRepository = scopedServices.GetRequiredService<ITestObjectRepository>();
 
-                try
+                TestJsonObject testObject = new TestJsonObject
                 {
-                    dbManagement.CreateDb(conn =>
+                    FirstName = "John",
+                    LastName = "Doe",
+                    StartWork = new DateTime(2018, 06, 01),
+                    Content = new TestJsonContentObject
                     {
-                        conn.Execute(
-                            @"create table Test_Objects
-                              (
-                                 ID                                  integer primary key AUTOINCREMENT,
-                                 FirstName                           varchar(100) not null,
-                                 LastName                            varchar(100) not null,
-                                 StartWork                           datetime not null,
-                                 Content                             TEXT
-                              )");
-                    });
-
-                    ITestObjectRepository testObjectRepository = scopedServices.GetRequiredService<ITestObjectRepository>();
-                    testObjectRepository.ConnectToDb(dbManagement);
-
-                    TestJsonObject testObject = new TestJsonObject
-                    {
-                        FirstName = "John",
-                        LastName = "Doe",
-                        StartWork = new DateTime(2018, 06, 01),
-                        Content = new TestJsonContentObject
-                        {
-                            Nick = "JD",
-                            DateOfBirth = new DateTime(1990, 10, 11),
-                            Siblings = 2,
-                            FavoriteDaysOfTheWeek = new List<string>
+                        Nick = "JD",
+                        DateOfBirth = new DateTime(1990, 10, 11),
+                        Siblings = 2,
+                        FavoriteDaysOfTheWeek = new List<string>
                             {
                                 "Friday",
                                 "Saturday",
                                 "Sunday"
                             },
-                            FavoriteNumbers = new List<int> { 10, 15, 1332, 5555 }
-                        }
-                    };
+                        FavoriteNumbers = new List<int> { 10, 15, 1332, 5555 }
+                    }
+                };
 
-                    // Act
-                    testObjectRepository.SaveTestJsonObject(testObject);
-                    TestJsonObject retrievedTestObject = testObjectRepository.GetTestJsonObject(testObject.Id);
+                // Act
+                testObjectRepository.SaveTestJsonObject(testObject);
+                TestJsonObject retrievedTestObject = testObjectRepository.GetTestJsonObject(testObject.Id);
 
-                    // Assert
-                    retrievedTestObject.Should().NotBeNull();
-                    retrievedTestObject.Should().BeEquivalentTo(testObject);
-                    retrievedTestObject.Content.Should().BeEquivalentTo(testObject.Content);
-                }
-                finally
-                {
-                    dbManagement.DeleteDb();
-                }
+                // Assert
+                retrievedTestObject.Should().NotBeNull();
+                retrievedTestObject.Should().BeEquivalentTo(testObject);
+                retrievedTestObject.Content.Should().BeEquivalentTo(testObject.Content);
             }
         }
 
@@ -159,7 +114,7 @@ namespace DapperMappers.Core.Tests
             // Search the specified assembly and register all classes that implement IXmlObjectType and IJsonObjectType interfaces
             services.RegisterAllTypes(new[] { Assembly.GetExecutingAssembly() });
 
-            services.AddTransient<ISqLiteDbManagement, SqLiteDbManagement>();
+            services.AddTransient<IDbConnectionFactory, SqliteConnectionFactory>();
             services.AddTransient<ITestObjectRepository, TestObjectRepository>();
 
             return services;
