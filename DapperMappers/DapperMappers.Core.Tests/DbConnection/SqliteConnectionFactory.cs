@@ -52,22 +52,14 @@ namespace DapperMappers.Core.Tests.DbConnection
 
             using (var conn = Connection())
             {
-                conn.Open();
-                try
-                {
-                    conn.ExecuteAsync(@"create table Test_Objects
-                               (
-                                  ID                                  integer primary key AUTOINCREMENT,
-                                  FirstName                           varchar(100) not null,
-                                  LastName                            varchar(100) not null,
-                                  StartWork                           datetime not null,
-                                  Content                             TEXT
-                               )");
-                }
-                finally
-                {
-                    conn.Close();
-                }
+                conn.ExecuteAsync(@"create table Test_Objects
+                   (
+                      ID                                  integer primary key AUTOINCREMENT,
+                      FirstName                           varchar(100) not null,
+                      LastName                            varchar(100) not null,
+                      StartWork                           datetime not null,
+                      Content                             TEXT
+                   )");
             }
         }
     }

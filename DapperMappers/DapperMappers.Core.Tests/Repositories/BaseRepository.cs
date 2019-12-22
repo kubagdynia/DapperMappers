@@ -3,13 +3,13 @@ using System;
 
 namespace DapperMappers.Core.Tests.Repositories
 {
-    public abstract class BaseRepository : IBaseRepository
+    public abstract class BaseRepository
     {
-        protected IDbConnectionFactory _connectionFactory;
+        protected readonly IDbConnectionFactory ConnectionFactory;
 
-        public BaseRepository(IDbConnectionFactory connectionFactory)
+        protected BaseRepository(IDbConnectionFactory connectionFactory)
         {
-            _connectionFactory = connectionFactory;
+            ConnectionFactory = connectionFactory;
         }
 
         public void Dispose()
@@ -22,13 +22,8 @@ namespace DapperMappers.Core.Tests.Repositories
         {
             if (disposing)
             {
-                _connectionFactory.CleanUp();
+                ConnectionFactory.CleanUp();
             }
         }
-    }
-
-    public interface IBaseRepository : IDisposable
-    {
-
     }
 }

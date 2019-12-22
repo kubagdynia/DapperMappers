@@ -14,7 +14,7 @@ namespace DapperMappers.Core.Tests
 {
     public class Tests
     {
-        
+        [Test]
         public void Should_Be_Ok()
         {
             1.Should().Equals(1);
@@ -31,10 +31,8 @@ namespace DapperMappers.Core.Tests
             {
                 var scopedServices = scope.ServiceProvider;
 
-
                 using (ITestObjectRepository testObjectRepository = scopedServices.GetRequiredService<ITestObjectRepository>())
                 {
-
                     TestXmlObject testObject = new TestXmlObject
                     {
                         FirstName = "John",
@@ -108,8 +106,6 @@ namespace DapperMappers.Core.Tests
                     retrievedTestObject.Should().BeEquivalentTo(testObject);
                     retrievedTestObject.Content.Should().BeEquivalentTo(testObject.Content);
                 }
-
-                
             }
         }
 
