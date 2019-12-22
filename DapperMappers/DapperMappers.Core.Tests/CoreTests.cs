@@ -14,7 +14,7 @@ namespace DapperMappers.Core.Tests
 {
     public class Tests
     {
-        [Test]
+        
         public void Should_Be_Ok()
         {
             1.Should().Equals(1);
@@ -31,35 +31,38 @@ namespace DapperMappers.Core.Tests
             {
                 var scopedServices = scope.ServiceProvider;
 
-                ITestObjectRepository testObjectRepository = scopedServices.GetRequiredService<ITestObjectRepository>();
 
-                TestXmlObject testObject = new TestXmlObject
+                using (ITestObjectRepository testObjectRepository = scopedServices.GetRequiredService<ITestObjectRepository>())
                 {
-                    FirstName = "John",
-                    LastName = "Doe",
-                    StartWork = new DateTime(2018, 06, 01),
-                    Content = new TestXmlContentObject
+
+                    TestXmlObject testObject = new TestXmlObject
                     {
-                        Nick = "JD",
-                        DateOfBirth = new DateTime(1990, 10, 11),
-                        Siblings = 2,
-                        FavoriteDaysOfTheWeek = new List<string>
+                        FirstName = "John",
+                        LastName = "Doe",
+                        StartWork = new DateTime(2018, 06, 01),
+                        Content = new TestXmlContentObject
+                        {
+                            Nick = "JD",
+                            DateOfBirth = new DateTime(1990, 10, 11),
+                            Siblings = 2,
+                            FavoriteDaysOfTheWeek = new List<string>
                             {
                                 "Friday",
                                 "Saturday"
                             },
-                        FavoriteNumbers = new List<int> { -502, 444, 0, 777777 }
-                    }
-                };
+                            FavoriteNumbers = new List<int> { -502, 444, 0, 777777 }
+                        }
+                    };
 
-                // Act
-                testObjectRepository.SaveTestObject(testObject);
-                TestXmlObject retrievedTestObject = testObjectRepository.GetTestObject(testObject.Id);
+                    // Act
+                    testObjectRepository.SaveTestObject(testObject);
+                    TestXmlObject retrievedTestObject = testObjectRepository.GetTestObject(testObject.Id);
 
-                // Assert
-                retrievedTestObject.Should().NotBeNull();
-                retrievedTestObject.Should().BeEquivalentTo(testObject);
-                retrievedTestObject.Content.Should().BeEquivalentTo(testObject.Content);
+                    // Assert
+                    retrievedTestObject.Should().NotBeNull();
+                    retrievedTestObject.Should().BeEquivalentTo(testObject);
+                    retrievedTestObject.Content.Should().BeEquivalentTo(testObject.Content);
+                }
             }
         }
 
@@ -74,36 +77,39 @@ namespace DapperMappers.Core.Tests
             {
                 var scopedServices = scope.ServiceProvider;
 
-                ITestObjectRepository testObjectRepository = scopedServices.GetRequiredService<ITestObjectRepository>();
-
-                TestJsonObject testObject = new TestJsonObject
+                using (ITestObjectRepository testObjectRepository = scopedServices.GetRequiredService<ITestObjectRepository>())
                 {
-                    FirstName = "John",
-                    LastName = "Doe",
-                    StartWork = new DateTime(2018, 06, 01),
-                    Content = new TestJsonContentObject
+                    TestJsonObject testObject = new TestJsonObject
                     {
-                        Nick = "JD",
-                        DateOfBirth = new DateTime(1990, 10, 11),
-                        Siblings = 2,
-                        FavoriteDaysOfTheWeek = new List<string>
+                        FirstName = "John",
+                        LastName = "Doe",
+                        StartWork = new DateTime(2018, 06, 01),
+                        Content = new TestJsonContentObject
+                        {
+                            Nick = "JD",
+                            DateOfBirth = new DateTime(1990, 10, 11),
+                            Siblings = 2,
+                            FavoriteDaysOfTheWeek = new List<string>
                             {
                                 "Friday",
                                 "Saturday",
                                 "Sunday"
                             },
-                        FavoriteNumbers = new List<int> { 10, 15, 1332, 5555 }
-                    }
-                };
+                            FavoriteNumbers = new List<int> { 10, 15, 1332, 5555 }
+                        }
+                    };
 
-                // Act
-                testObjectRepository.SaveTestJsonObject(testObject);
-                TestJsonObject retrievedTestObject = testObjectRepository.GetTestJsonObject(testObject.Id);
+                    // Act
+                    testObjectRepository.SaveTestJsonObject(testObject);
+                    TestJsonObject retrievedTestObject = testObjectRepository.GetTestJsonObject(testObject.Id);
 
-                // Assert
-                retrievedTestObject.Should().NotBeNull();
-                retrievedTestObject.Should().BeEquivalentTo(testObject);
-                retrievedTestObject.Content.Should().BeEquivalentTo(testObject.Content);
+                    // Assert
+                    retrievedTestObject.Should().NotBeNull();
+                    retrievedTestObject.Should().BeEquivalentTo(testObject);
+                    retrievedTestObject.Content.Should().BeEquivalentTo(testObject.Content);
+                }
+
+                
             }
         }
 

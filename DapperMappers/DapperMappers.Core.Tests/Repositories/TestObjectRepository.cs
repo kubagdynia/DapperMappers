@@ -1,12 +1,12 @@
 ﻿using Dapper;
 using DapperMappers.Core.DbConnection;
 using DapperMappers.Core.Tests.Models;
-using System.Data;
+using System;
 using System.Linq;
 
 namespace DapperMappers.Core.Tests.Repositories
 {
-    public interface ITestObjectRepository
+    public interface ITestObjectRepository : IDisposable
     {
         TestXmlObject GetTestObject(long id);
         void SaveTestObject(TestXmlObject testObject);
@@ -14,50 +14,92 @@ namespace DapperMappers.Core.Tests.Repositories
         void SaveTestJsonObject(TestJsonObject testObject);
     }
 
-    public class TestObjectRepository : ITestObjectRepository
+    public class TestObjectRepository : BaseRepository, ITestObjectRepository
     {
-        private IDbConnection _connection;
-
-        public TestObjectRepository(IDbConnectionFactory connectionFactory)
+        public TestObjectRepository(IDbConnectionFactory connectionFactory) : base(connectionFactory) 
         {
-            _connection = connectionFactory.Connection();
+            
         }
 
         public TestXmlObject GetTestObject(long id)
         {
-            TestXmlObject result = _connection.Query<TestXmlObject>(
-                @"SELECT Id, FirstName, LastName, StartWork, Content
-                    FROM Test_Objects
-                    WHERE Id = @id", new { id }).FirstOrDefault();
-            return result;
+            using (var conn = _connectionFactory.Connection())
+            {
+                conn.Open();
+                try
+                {
+                    TestXmlObject result = conn.Query<TestXmlObject>(
+                        @"SELECT Id, FirstName, LastName, StartWork, Content
+                        FROM Test_Objects
+                        WHERE Id = @id", new { id }).FirstOrDefault();
+                    return result;
+                }
+                finally
+                {
+                    conn.Close();
+                }
+            }
         }
 
         public void SaveTestObject(TestXmlObject testObject)
         {
-            testObject.Id = _connection.Query<long>(
-                @"INSERT INTO Test_Objects 
-                    ( FirstName, LastName, StartWork, Content) VALUES 
-                    ( @FirstName, @LastName, @StartWork, @Content );
-                    select last_insert_rowid()", testObject).First();
+            using (var conn = _connectionFactory.Connection())
+            {
+                conn.Open();
+                try
+                {
+                    testObject.Id = conn.Query<long>(
+                        @"INSERT INTO Test_Objects 
+                        ( FirstName, LastName, StartWork, Content) VALUES 
+                        ( @FirstName, @LastName, @StartWork, @Content );
+                        select last_insert_rowid()", testObject).First();
+                }
+                finally
+                {
+                    conn.Close();
+                }
+            }
         }
 
         public TestJsonObject GetTestJsonObject(long id)
         {
-            
-            TestJsonObject result = _connection.Query<TestJsonObject>(
-                @"SELECT Id, FirstName, LastName, StartWork, Content
-                    FROM Test_Objects
-                    WHERE Id = @id", new { id }).FirstOrDefault();
-            return result;
+            using (var conn = _connectionFactory.Connection())
+            {
+                conn.Open();
+                try
+                {
+                    TestJsonObject result = conn.Query<TestJsonObject>(
+                        @"SELECT Id, FirstName, LastName, StartWork, Content
+                        FROM Test_Objects
+                        WHERE Id = @id", new { id }).FirstOrDefault();
+                    return result;
+
+                }
+                finally
+                {
+                    conn.Close();
+                }
+            }
         }
 
         public void SaveTestJsonObject(TestJsonObject testObject)
         {
-            testObject.Id = _connection.Query<long>(
-                @"INSERT INTO Test_Objects 
-                    ( FirstName, LastName, StartWork, Content) VALUES 
-                    ( @FirstName, @LastName, @StartWork, @Content );
-                    select last_insert_rowid()", testObject).First();
+            using (var conn = _connectionFactory.Connection())
+            {
+                conn.Open();
+                try
+                {
+                    testObject.Id = conn.Query<long>(
+                        @"INSERT INTO Test_Objects 
+                        ( FirstName, LastName, StartWork, Content) VALUES 
+                        ( @FirstName, @LastName, @StartWork, @Content );
+                        select last_insert_rowid()", testObject).First();
+                }
+                finally
+                {
+                    conn.Close();
+                }
+            }
         }
     }
 }

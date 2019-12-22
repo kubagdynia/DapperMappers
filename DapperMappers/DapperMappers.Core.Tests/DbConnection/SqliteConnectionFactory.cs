@@ -3,27 +3,23 @@ using DapperMappers.Core.DbConnection;
 using Microsoft.Data.Sqlite;
 using System;
 using System.Data;
+using System.Diagnostics;
 using System.IO;
 
 namespace DapperMappers.Core.Tests.DbConnection
 {
     public class SqliteConnectionFactory : IDbConnectionFactory
     {
-        private readonly IDbConnection _connection = null;
-
         private readonly string _fileName;
 
         public SqliteConnectionFactory()
         {
             _fileName = Path.Combine(Environment.CurrentDirectory, $"TestDb_{Guid.NewGuid()}.sqlite");
 
-            var connectionString = $"FileName={_fileName}";
-            _connection = new SqliteConnection(connectionString);
-
-            CreateDb();
+            InitializeDatabase();
         }
 
-        ~SqliteConnectionFactory()
+        public void CleanUp()
         {
             if (File.Exists(_fileName))
             {
@@ -33,7 +29,10 @@ namespace DapperMappers.Core.Tests.DbConnection
 
         public IDbConnection Connection()
         {
-            return _connection;
+            var connectionString = $"Filename={_fileName}";
+            var conn = new SqliteConnection(connectionString);
+
+            return conn;
         }
 
         public IDbConnection Connection(string name)
@@ -41,21 +40,22 @@ namespace DapperMappers.Core.Tests.DbConnection
             return Connection();
         }
         
-        private void CreateDb()
+        private void InitializeDatabase()
         {
             if (File.Exists(_fileName))
             {
                 return;
             }
-            
+
             FileStream fileStream = File.Create(_fileName);
             fileStream.Close();
 
-            try
+            using (var conn = Connection())
             {
-                _connection.Open();
-
-                _connection.Execute(@"create table Test_Objects
+                conn.Open();
+                try
+                {
+                    conn.ExecuteAsync(@"create table Test_Objects
                                (
                                   ID                                  integer primary key AUTOINCREMENT,
                                   FirstName                           varchar(100) not null,
@@ -63,10 +63,11 @@ namespace DapperMappers.Core.Tests.DbConnection
                                   StartWork                           datetime not null,
                                   Content                             TEXT
                                )");
-            }
-            finally
-            {
-                _connection.Close();
+                }
+                finally
+                {
+                    conn.Close();
+                }
             }
         }
     }
