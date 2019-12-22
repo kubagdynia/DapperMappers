@@ -3,11 +3,12 @@ using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
 using DapperMappers.Core.Extensions;
 using DapperMappers.Core.Tests.Repositories;
-using Dapper;
 using DapperMappers.Core.Tests.Models;
 using System;
 using System.Reflection;
 using System.Collections.Generic;
+using DapperMappers.Core.DbConnection;
+using DapperMappers.Core.Tests.DbConnection;
 
 namespace DapperMappers.Core.Tests
 {
@@ -30,26 +31,8 @@ namespace DapperMappers.Core.Tests
             {
                 var scopedServices = scope.ServiceProvider;
 
-                ISqLiteDbManagement dbManagement = scopedServices.GetRequiredService<ISqLiteDbManagement>();
-
-                try
+                using (ITestObjectRepository testObjectRepository = scopedServices.GetRequiredService<ITestObjectRepository>())
                 {
-                    dbManagement.CreateDb(conn =>
-                    {
-                        conn.Execute(
-                            @"create table Test_Objects
-                              (
-                                 ID                                  integer primary key AUTOINCREMENT,
-                                 FirstName                           varchar(100) not null,
-                                 LastName                            varchar(100) not null,
-                                 StartWork                           datetime not null,
-                                 Content                             TEXT
-                              )");
-                    });
-
-                    ITestObjectRepository testObjectRepository = scopedServices.GetRequiredService<ITestObjectRepository>();
-                    testObjectRepository.ConnectToDb(dbManagement);
-
                     TestXmlObject testObject = new TestXmlObject
                     {
                         FirstName = "John",
@@ -78,13 +61,9 @@ namespace DapperMappers.Core.Tests
                     retrievedTestObject.Should().BeEquivalentTo(testObject);
                     retrievedTestObject.Content.Should().BeEquivalentTo(testObject.Content);
                 }
-                finally
-                {
-                    dbManagement.DeleteDb();
-                }
             }
         }
-        
+
         [Test]
         public void Json_Data_Saved_In_DataBase_Should_Be_Properly_Restored()
         {
@@ -96,26 +75,8 @@ namespace DapperMappers.Core.Tests
             {
                 var scopedServices = scope.ServiceProvider;
 
-                ISqLiteDbManagement dbManagement = scopedServices.GetRequiredService<ISqLiteDbManagement>();
-
-                try
+                using (ITestObjectRepository testObjectRepository = scopedServices.GetRequiredService<ITestObjectRepository>())
                 {
-                    dbManagement.CreateDb(conn =>
-                    {
-                        conn.Execute(
-                            @"create table Test_Objects
-                              (
-                                 ID                                  integer primary key AUTOINCREMENT,
-                                 FirstName                           varchar(100) not null,
-                                 LastName                            varchar(100) not null,
-                                 StartWork                           datetime not null,
-                                 Content                             TEXT
-                              )");
-                    });
-
-                    ITestObjectRepository testObjectRepository = scopedServices.GetRequiredService<ITestObjectRepository>();
-                    testObjectRepository.ConnectToDb(dbManagement);
-
                     TestJsonObject testObject = new TestJsonObject
                     {
                         FirstName = "John",
@@ -145,10 +106,6 @@ namespace DapperMappers.Core.Tests
                     retrievedTestObject.Should().BeEquivalentTo(testObject);
                     retrievedTestObject.Content.Should().BeEquivalentTo(testObject.Content);
                 }
-                finally
-                {
-                    dbManagement.DeleteDb();
-                }
             }
         }
 
@@ -159,7 +116,7 @@ namespace DapperMappers.Core.Tests
             // Search the specified assembly and register all classes that implement IXmlObjectType and IJsonObjectType interfaces
             services.RegisterAllTypes(new[] { Assembly.GetExecutingAssembly() });
 
-            services.AddTransient<ISqLiteDbManagement, SqLiteDbManagement>();
+            services.AddTransient<IDbConnectionFactory, SqliteConnectionFactory>();
             services.AddTransient<ITestObjectRepository, TestObjectRepository>();
 
             return services;
