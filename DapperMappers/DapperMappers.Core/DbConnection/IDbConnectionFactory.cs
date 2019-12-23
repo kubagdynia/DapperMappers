@@ -1,8 +1,9 @@
-﻿using System.Data;
+﻿using System;
+using System.Data;
 
 namespace DapperMappers.Core.DbConnection
 {
-    public interface IDbConnectionFactory
+    public interface IDbConnectionFactory : IDisposable
     {
         IDbConnection Connection();
 

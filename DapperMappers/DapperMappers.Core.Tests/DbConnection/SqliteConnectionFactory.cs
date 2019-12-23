@@ -3,7 +3,6 @@ using DapperMappers.Core.DbConnection;
 using Microsoft.Data.Sqlite;
 using System;
 using System.Data;
-using System.Diagnostics;
 using System.IO;
 
 namespace DapperMappers.Core.Tests.DbConnection
@@ -21,6 +20,10 @@ namespace DapperMappers.Core.Tests.DbConnection
 
         public void CleanUp()
         {
+
+            GC.Collect();
+            GC.WaitForPendingFinalizers();   
+
             if (File.Exists(_fileName))
             {
                 File.Delete(_fileName);
@@ -29,7 +32,7 @@ namespace DapperMappers.Core.Tests.DbConnection
 
         public IDbConnection Connection()
         {
-            var connectionString = $"Filename={_fileName}";
+            var connectionString = $"DataSource={_fileName}";
             var conn = new SqliteConnection(connectionString);
 
             return conn;
@@ -39,7 +42,21 @@ namespace DapperMappers.Core.Tests.DbConnection
         {
             return Connection();
         }
-        
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                CleanUp();
+            }
+        }
+
         private void InitializeDatabase()
         {
             if (File.Exists(_fileName))
@@ -52,14 +69,22 @@ namespace DapperMappers.Core.Tests.DbConnection
 
             using (var conn = Connection())
             {
-                conn.ExecuteAsync(@"create table Test_Objects
-                   (
-                      ID                                  integer primary key AUTOINCREMENT,
-                      FirstName                           varchar(100) not null,
-                      LastName                            varchar(100) not null,
-                      StartWork                           datetime not null,
-                      Content                             TEXT
-                   )");
+                conn.Open();
+                try
+                {
+                    conn.ExecuteAsync(@"create table Test_Objects
+                       (
+                          ID                                  integer primary key AUTOINCREMENT,
+                          FirstName                           varchar(100) not null,
+                          LastName                            varchar(100) not null,
+                          StartWork                           datetime not null,
+                          Content                             TEXT
+                       )");
+                }
+                finally
+                {
+                    conn.Close();
+                }
             }
         }
     }
