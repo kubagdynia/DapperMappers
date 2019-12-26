@@ -16,7 +16,7 @@ namespace DapperMappers.Core.Tests
     public class Tests
     {
         [Test, Order(1)]
-        public void Should_Be_Ok()
+        public void Core_Test_Should_Be_Ok()
         {
             1.Should().Equals(1);
         }
@@ -61,11 +61,42 @@ namespace DapperMappers.Core.Tests
                 retrievedTestObject.Should().NotBeNull();
                 retrievedTestObject.Should().BeEquivalentTo(testObject);
                 retrievedTestObject.Content.Should().BeEquivalentTo(testObject.Content);
-                
             }
         }
 
         [Test, Order(3)]
+        public async Task Null_Xml_Data_Saved_In_DataBase_Should_Be_Restored_As_Null_Object()
+        {
+            ServiceCollection services = PrepareServiceCollection();
+
+            ServiceProvider serviceProvider = services.BuildServiceProvider();
+
+            using (IServiceScope scope = serviceProvider.CreateScope())
+            {
+                var scopedServices = scope.ServiceProvider;
+
+                ITestObjectRepository testObjectRepository = scopedServices.GetRequiredService<ITestObjectRepository>();
+
+                TestXmlObject testObject = new TestXmlObject
+                {
+                    FirstName = "John",
+                    LastName = "Doe",
+                    StartWork = new DateTime(2018, 06, 01),
+                    Content = null
+                };
+
+                // Act
+                await testObjectRepository.SaveTestObject(testObject);
+                TestXmlObject retrievedTestObject = await testObjectRepository.GetTestObject(testObject.Id);
+
+                // Assert
+                retrievedTestObject.Should().NotBeNull();
+                retrievedTestObject.Should().BeEquivalentTo(testObject);
+                retrievedTestObject.Content.Should().BeEquivalentTo(testObject.Content);
+            }
+        }
+
+        [Test, Order(4)]
         public async Task Json_Data_Saved_In_DataBase_Should_Be_Properly_Restored()
         {
             ServiceCollection services = PrepareServiceCollection();
@@ -105,8 +136,39 @@ namespace DapperMappers.Core.Tests
                 // Assert
                 retrievedTestObject.Should().NotBeNull();
                 retrievedTestObject.Should().BeEquivalentTo(testObject);
+                retrievedTestObject.Content.Should().BeEquivalentTo(testObject.Content);                
+            }
+        }
+
+        [Test, Order(4)]
+        public async Task Null_Json_Data_Saved_In_DataBase_Should_Be_Restored_As_Null_Object()
+        {
+            ServiceCollection services = PrepareServiceCollection();
+
+            ServiceProvider serviceProvider = services.BuildServiceProvider();
+
+            using (IServiceScope scope = serviceProvider.CreateScope())
+            {
+                var scopedServices = scope.ServiceProvider;
+
+                ITestObjectRepository testObjectRepository = scopedServices.GetRequiredService<ITestObjectRepository>();
+
+                TestJsonObject testObject = new TestJsonObject
+                {
+                    FirstName = "John",
+                    LastName = "Doe",
+                    StartWork = new DateTime(2018, 06, 01),
+                    Content = null
+                };
+
+                // Act
+                await testObjectRepository.SaveTestJsonObject(testObject);
+                TestJsonObject retrievedTestObject = await testObjectRepository.GetTestJsonObject(testObject.Id);
+
+                // Assert
+                retrievedTestObject.Should().NotBeNull();
+                retrievedTestObject.Should().BeEquivalentTo(testObject);
                 retrievedTestObject.Content.Should().BeEquivalentTo(testObject.Content);
-                
             }
         }
 
