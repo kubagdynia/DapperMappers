@@ -21,7 +21,7 @@ namespace DapperMappers.Core.TypeHandlers
 
         public void SetValue(IDbDataParameter parameter, object value)
         {
-            parameter.Value = (value == null) ? (object)DBNull.Value : JsonSerializer.Serialize(value, BaseJsonOptions.GetJsonSerializerOptions);
+            parameter.Value = value == null || value is DBNull ? (object)DBNull.Value : JsonSerializer.Serialize(value, BaseJsonOptions.GetJsonSerializerOptions);
             parameter.DbType = DbType.String;
         }
     }

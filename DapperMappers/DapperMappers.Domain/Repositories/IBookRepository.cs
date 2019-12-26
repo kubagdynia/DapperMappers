@@ -1,10 +1,11 @@
 using DapperMappers.Domain.Models;
+using System.Threading.Tasks;
 
 namespace DapperMappers.Domain.Repositories
 {
     public interface IBookRepository
     {
-        Book GetBook(long id);
-        void SaveBook(Book book);
+        Task<Book> GetBook(long id);
+        Task SaveBook(Book book);
     }
 }

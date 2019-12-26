@@ -8,7 +8,5 @@ namespace DapperMappers.Core.DbConnection
         IDbConnection Connection();
 
         IDbConnection Connection(string name);
-
-        void CleanUp();
     }
 }

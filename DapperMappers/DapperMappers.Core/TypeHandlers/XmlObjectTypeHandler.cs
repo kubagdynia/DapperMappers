@@ -36,7 +36,7 @@ namespace DapperMappers.Core.TypeHandlers
 
         public void SetValue(IDbDataParameter parameter, object value)
         {
-            parameter.Value = value == null ? DBNull.Value : SerializeToXml(value);
+            parameter.Value = value == null || value is DBNull ? DBNull.Value : SerializeToXml(value);
         }
 
         private static object SerializeToXml(object value)
@@ -48,7 +48,8 @@ namespace DapperMappers.Core.TypeHandlers
                 using (XmlWriter writer = XmlWriter.Create(stream, XmlWriterSettings))
                 {
                     serializer.Serialize(writer, value, WithoutNamespaces);
-                    return stream.ToString();
+                    string result = stream.ToString();
+                    return result;
                 }
             }
         }
