@@ -1,15 +1,15 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using DapperMappers.Core.DbConnection;
+using DapperMappers.Core.Extensions;
+using DapperMappers.Domain.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
+using DapperMappers.Domain.Models;
+using AutoMapper;
+using DapperMappers.Api.Extensions;
+using DapperMappers.Api.Serializers;
 
 namespace DapperMappers.Api
 {
@@ -25,7 +25,27 @@ namespace DapperMappers.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddControllers().AddJsonOptions(options =>
+            {
+                options.JsonSerializerOptions.IgnoreNullValues = BaseJsonOptions.IgnoreNullValues;
+                options.JsonSerializerOptions.PropertyNamingPolicy = BaseJsonOptions.PropertyNamingPolicy;
+
+            }).ConfigureApiBehaviorOptions(options =>
+            {
+                options.SuppressModelStateInvalidFilter = false;
+            });
+
+            services.AddAutoMapper(typeof(Startup));
+
+            services.AddTransient<IDbConnectionFactory, DapperDbConnectionFactory>();
+
+            services.AddSingleton<ICommandQuery, CommandQuery>();
+
+            services.AddScoped<IBookRepository, BookRepository>();
+
+            services.RegisterAllTypes(new[] { typeof(Book).Assembly });
+
+            services.AddSwagger<Startup>(includeXmlComments: true, name: "v1", title: "Book API", version: "v1");
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -41,6 +61,8 @@ namespace DapperMappers.Api
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseCustomSwagger("/swagger/v1/swagger.json", "Book API V1");
 
             app.UseEndpoints(endpoints =>
             {
