@@ -36,7 +36,7 @@ namespace DapperMappers.Domain.Tests
 
                 // Act
                 await bookRepository.SaveBook(book);
-                Book retrievedBook = await bookRepository.GetBook(book.Id);
+                Book retrievedBook = await bookRepository.GetBook(book.InternalId);
 
                 // Assert
                 retrievedBook.Should().NotBeNull();
@@ -51,7 +51,8 @@ namespace DapperMappers.Domain.Tests
         {
             return new Book
             {
-                Name = "Test name",
+                Id = Guid.NewGuid().ToString(),
+                Title = "Test name",
                 PageCount = 100,
                 Isbn = 100021,
                 DateOfPublication = new DateTime(2019, 01, 01),

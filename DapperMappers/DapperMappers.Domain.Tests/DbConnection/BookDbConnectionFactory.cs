@@ -17,17 +17,18 @@ namespace DapperMappers.Domain.Tests.DbConnection
             dbConnection.Execute(
                 @"CREATE TABLE Books
                 (
-                    ID                                  integer primary key AUTOINCREMENT,
-                    Name                                varchar(200) not null,
-                    PageCount                           integer not null,
+                    InternalId                          integer primary key AUTOINCREMENT,
+                    Id                                  varchar(36) not null,
+                    Title                               varchar(200) not null,
+                    PageCount                           integer null,
                     Isbn                                integer null,
                     DateOfPublication                   datetime not null,
-                    Authors                             TEXT,
-                    TableOfContents                     TEXT,
+                    Authors                             TEXT null,
+                    TableOfContents                     TEXT null,
                     ShortDescription                    varchar(500) null,
-                    Description                         TEXT,
-                    Publisher                           varchar(100) null,
-                    Url                                 varchar(150)
+                    Description                         TEXT null,
+                    Publisher                           varchar(200) null,
+                    Url                                 varchar(200) null
                 )");
         }
     }

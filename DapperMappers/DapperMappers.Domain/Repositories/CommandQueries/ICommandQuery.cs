@@ -2,7 +2,9 @@
 {
     public interface ICommandQuery
     {
-        string GetBook { get; }
+        string GetBookByInternalId { get; }
+
+        string GetBookById { get; }
 
         string SaveBook { get; }
     }

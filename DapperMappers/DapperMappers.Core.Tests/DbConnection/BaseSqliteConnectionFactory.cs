@@ -9,12 +9,14 @@ namespace DapperMappers.Core.Tests.DbConnection
     public abstract class BaseSqliteConnectionFactory : IDbConnectionFactory
     {
         private readonly string _fileName;
+        private readonly bool _deleteDbOnExit;
 
-        public BaseSqliteConnectionFactory(string dbFilename)
+        public BaseSqliteConnectionFactory(string dbFilename, bool deleteDbOnExit = true)
         {
             _fileName = Path.Combine(Environment.CurrentDirectory, dbFilename);
+            _deleteDbOnExit = deleteDbOnExit;
 
-            InitializeDatabase();
+            InitializeDatabase();            
         }
 
         public IDbConnection Connection()
@@ -51,7 +53,7 @@ namespace DapperMappers.Core.Tests.DbConnection
             GC.Collect();
             GC.WaitForPendingFinalizers();
 
-            if (File.Exists(_fileName))
+            if (_deleteDbOnExit && File.Exists(_fileName))
             {
                 File.Delete(_fileName);
             }

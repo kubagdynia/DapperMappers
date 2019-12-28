@@ -16,20 +16,29 @@ namespace DapperMappers.Domain.Repositories
             _commandQuery = commandQuery;
         }
 
-        public async Task<Book> GetBook(long id)
+        public async Task<Book> GetBook(long internalId)
         {
-            using (var conn = _connectionFactory.Connection("BookDb"))
+            using (var conn = _connectionFactory.Connection())
             {
-                Book book = await conn.QueryFirstAsync<Book>(_commandQuery.GetBook, new { id });
+                Book book = await conn.QueryFirstAsync<Book>(_commandQuery.GetBookByInternalId, new { internalId });
+                return book;
+            }
+        }
+
+        public async Task<Book> GetBook(string id)
+        {
+            using (var conn = _connectionFactory.Connection())
+            {
+                Book book = await conn.QueryFirstAsync<Book>(_commandQuery.GetBookById, new { id });
                 return book;
             }
         }
 
         public async Task SaveBook(Book book)
         {
-            using (var conn = _connectionFactory.Connection("BookDb"))
+            using (var conn = _connectionFactory.Connection())
             {
-                book.Id = await conn.QueryFirstAsync<long>(_commandQuery.SaveBook, book);
+                book.InternalId = await conn.QueryFirstAsync<long>(_commandQuery.SaveBook, book);
             }
         }
     }
