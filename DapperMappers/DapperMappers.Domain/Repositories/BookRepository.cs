@@ -1,6 +1,7 @@
 using Dapper;
 using DapperMappers.Core.DbConnection;
 using DapperMappers.Domain.Models;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace DapperMappers.Domain.Repositories
@@ -20,7 +21,7 @@ namespace DapperMappers.Domain.Repositories
         {
             using (var conn = _connectionFactory.Connection())
             {
-                Book book = await conn.QueryFirstAsync<Book>(_commandQuery.GetBookByInternalId, new { internalId });
+                Book book = await conn.QueryFirstOrDefaultAsync<Book>(_commandQuery.GetBookByInternalId, new { internalId });
                 return book;
             }
         }
@@ -29,8 +30,17 @@ namespace DapperMappers.Domain.Repositories
         {
             using (var conn = _connectionFactory.Connection())
             {
-                Book book = await conn.QueryFirstAsync<Book>(_commandQuery.GetBookById, new { id });
+                Book book = await conn.QueryFirstOrDefaultAsync<Book>(_commandQuery.GetBookById, new { id });
                 return book;
+            }
+        }
+
+        public async Task<IEnumerable<Book>> GetAllBooks()
+        {
+            using (var conn = _connectionFactory.Connection())
+            {
+                IEnumerable<Book> books = await conn.QueryAsync<Book>(_commandQuery.GetAllBooks);
+                return books;
             }
         }
 
@@ -38,7 +48,8 @@ namespace DapperMappers.Domain.Repositories
         {
             using (var conn = _connectionFactory.Connection())
             {
-                book.InternalId = await conn.QueryFirstAsync<long>(_commandQuery.SaveBook, book);
+                //book.InternalId = await conn.QueryFirstAsync<long>(_commandQuery.SaveBook, book);
+                await conn.ExecuteAsync(_commandQuery.SaveBook, book);
             }
         }
     }

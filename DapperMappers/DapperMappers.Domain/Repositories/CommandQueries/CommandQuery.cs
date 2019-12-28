@@ -10,11 +10,14 @@
             @"SELECT InternalId, Id, Title, PageCount, Isbn, DateOfPublication, Authors, TableOfContents,
                 ShortDescription, Description, Publisher, Url FROM Books WHERE Id = @id";
 
+        public string GetAllBooks =>
+            @"SELECT InternalId, Id, Title, PageCount, Isbn, DateOfPublication, Authors, TableOfContents,
+                ShortDescription, Description, Publisher, Url FROM Books";
+
         public string SaveBook =>
             @"INSERT INTO Books (Id, Title, PageCount, Isbn, DateOfPublication, Authors,
                 TableOfContents, ShortDescription, Description, Publisher, Url)
               VALUES (@Id, @Title, @PageCount, @Isbn, @DateOfPublication, @Authors, @TableOfContents,
-                @ShortDescription, @Description, @Publisher, @Url);
-              SELECT last_insert_rowid()";
+                @ShortDescription, @Description, @Publisher, @Url)";
     }
 }

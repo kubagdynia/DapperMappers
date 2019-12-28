@@ -6,6 +6,8 @@
 
         string GetBookById { get; }
 
+        string GetAllBooks { get; }
+
         string SaveBook { get; }
     }
 }

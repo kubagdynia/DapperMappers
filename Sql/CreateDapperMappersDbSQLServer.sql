@@ -4,7 +4,7 @@ IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='Books' and xtype='U')
 		[Id] char(36) NOT NULL,
 		[Title] nvarchar(200) NOT NULL,
 		[PageCount] int NULL,
-		[Isbn] int NULL,
+		[Isbn] varchar(15) NULL,
 		[DateOfPublication] datetime NOT NULL,
 		[Authors] xml NULL,
 		[TableOfContents] xml NULL,

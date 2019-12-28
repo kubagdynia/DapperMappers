@@ -21,7 +21,7 @@ namespace DapperMappers.Domain.Tests.DbConnection
                     Id                                  varchar(36) not null,
                     Title                               varchar(200) not null,
                     PageCount                           integer null,
-                    Isbn                                integer null,
+                    Isbn                                varchar(15) null,
                     DateOfPublication                   datetime not null,
                     Authors                             TEXT null,
                     TableOfContents                     TEXT null,
