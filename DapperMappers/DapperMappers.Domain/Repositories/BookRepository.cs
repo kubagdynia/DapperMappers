@@ -52,5 +52,13 @@ namespace DapperMappers.Domain.Repositories
                 await conn.ExecuteAsync(_commandQuery.SaveBook, book);
             }
         }
+
+        public async Task DeleteBook(string id)
+        {
+            using (var conn = _connectionFactory.Connection())
+            {
+                await conn.ExecuteAsync(_commandQuery.DeleteBook, new { id });
+            }
+        }
     }
 }

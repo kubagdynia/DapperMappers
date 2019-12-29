@@ -48,6 +48,35 @@ namespace DapperMappers.Domain.Tests
             }
         }
 
+        [Test, Order(3)]
+        public async Task Deleting_A_Book_Should_Delete_The_Book_From_The_Database()
+        {
+            ServiceCollection services = PrepareServiceCollection();
+
+            ServiceProvider serviceProvider = services.BuildServiceProvider();
+
+            using (IServiceScope scope = serviceProvider.CreateScope())
+            {
+                var scopedServices = scope.ServiceProvider;
+
+                IBookRepository bookRepository = scopedServices.GetRequiredService<IBookRepository>();
+                Book book = CreateTestBook();
+
+                // Act
+                await bookRepository.SaveBook(book);
+                Book retrievedBook = await bookRepository.GetBook(book.Id);
+                await bookRepository.DeleteBook(book.Id);
+                Book retrievedDeletedBook = await bookRepository.GetBook(book.Id);
+
+                book.InternalId = retrievedBook.InternalId;
+
+                // Assert
+                retrievedBook.Should().NotBeNull();
+                retrievedBook.Should().BeEquivalentTo(book);
+                retrievedDeletedBook.Should().BeNull();
+            }
+        }
+
         private static Book CreateTestBook()
         {
             return new Book
