@@ -1,5 +1,5 @@
-﻿using DapperMappers.Api.Contracts.V1.Responses;
-using DapperMappers.Api.Resources;
+﻿using DapperMappers.Api.Contracts.V1.Resources;
+using DapperMappers.Api.Contracts.V1.Responses;
 using Microsoft.AspNetCore.Http;
 using Swashbuckle.AspNetCore.Filters;
 using System;

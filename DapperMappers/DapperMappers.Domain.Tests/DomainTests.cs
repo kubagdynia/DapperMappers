@@ -162,7 +162,7 @@ namespace DapperMappers.Domain.Tests
             ServiceCollection services = new ServiceCollection();
 
             // Search the specified assembly and register all classes that implement IXmlObjectType and IJsonObjectType interfaces
-            services.RegisterAllTypes(new[] { typeof(Book).Assembly });
+            services.RegisterAllDapperMapperTypes(new[] { typeof(Book).Assembly });
 
             services.AddSingleton<ICommandQuery, CommandQuery>();
             services.AddTransient<IDbConnectionFactory, BookDbConnectionFactory>();            

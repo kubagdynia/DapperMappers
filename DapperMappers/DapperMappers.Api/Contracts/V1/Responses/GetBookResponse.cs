@@ -1,4 +1,4 @@
-﻿using DapperMappers.Api.Resources;
+﻿using DapperMappers.Api.Contracts.V1.Resources;
 using System;
 
 namespace DapperMappers.Api.Contracts.V1.Responses

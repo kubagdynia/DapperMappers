@@ -1,5 +1,5 @@
 ﻿using DapperMappers.Api.Contracts.V1.Requests;
-using DapperMappers.Api.Resources;
+using DapperMappers.Api.Contracts.V1.Resources;
 using Swashbuckle.AspNetCore.Filters;
 using System;
 using System.Collections.Generic;
