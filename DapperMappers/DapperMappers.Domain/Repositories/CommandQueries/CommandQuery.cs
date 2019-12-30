@@ -19,5 +19,8 @@
                 TableOfContents, ShortDescription, Description, Publisher, Url)
               VALUES (@Id, @Title, @PageCount, @Isbn, @DateOfPublication, @Authors, @TableOfContents,
                 @ShortDescription, @Description, @Publisher, @Url)";
+
+        public string DeleteBook =>
+            @"DELETE FROM Books WHERE Id = @id";
     }
 }

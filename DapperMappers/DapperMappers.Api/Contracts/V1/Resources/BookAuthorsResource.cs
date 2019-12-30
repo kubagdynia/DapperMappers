@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace DapperMappers.Api.Resources
+namespace DapperMappers.Api.Contracts.V1.Resources
 {
     public class BookAuthorsResource
     {

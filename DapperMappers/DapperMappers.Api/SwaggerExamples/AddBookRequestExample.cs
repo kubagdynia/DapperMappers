@@ -1,15 +1,16 @@
-﻿using DapperMappers.Api.Resources;
+﻿using DapperMappers.Api.Contracts.V1.Requests;
+using DapperMappers.Api.Contracts.V1.Resources;
 using Swashbuckle.AspNetCore.Filters;
 using System;
 using System.Collections.Generic;
 
 namespace DapperMappers.Api.SwaggerExamples
 {
-    public class CreateBookResourceExample : IExamplesProvider<CreateBookResource>
+    public class AddBookRequestExample : IExamplesProvider<AddBookRequest>
     {
-        public CreateBookResource GetExamples()
+        public AddBookRequest GetExamples()
         {
-            CreateBookResource createBookResource = new CreateBookResource
+            AddBookRequest createBookResource = new AddBookRequest
             {
                 Title = "Hands-On Domain-Driven Design with .NET Core",
                 PageCount = 446,

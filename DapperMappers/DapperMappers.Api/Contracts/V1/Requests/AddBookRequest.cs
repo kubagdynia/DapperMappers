@@ -1,8 +1,9 @@
-﻿using System;
+﻿using DapperMappers.Api.Contracts.V1.Resources;
+using System;
 
-namespace DapperMappers.Api.Resources
+namespace DapperMappers.Api.Contracts.V1.Requests
 {
-    public class CreateBookResource
+    public class AddBookRequest
     {
         public string Title { get; set; }
 

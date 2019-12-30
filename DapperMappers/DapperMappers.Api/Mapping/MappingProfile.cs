@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
-using DapperMappers.Api.Resources;
+using DapperMappers.Api.Contracts.V1.Requests;
+using DapperMappers.Api.Contracts.V1.Resources;
 using DapperMappers.Domain.Models;
 
 namespace DapperMappers.Api.Mapping
@@ -35,7 +36,7 @@ namespace DapperMappers.Api.Mapping
             CreateMap<BookAuthorsResource, BookAuthors>();
 
             CreateMap<BookResource, Book>();
-            CreateMap<CreateBookResource, Book>();
+            CreateMap<AddBookRequest, Book>();
         }
     }
 }

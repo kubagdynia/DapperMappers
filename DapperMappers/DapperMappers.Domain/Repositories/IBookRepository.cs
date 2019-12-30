@@ -10,5 +10,6 @@ namespace DapperMappers.Domain.Repositories
         Task<Book> GetBook(string id);
         Task<IEnumerable<Book>> GetAllBooks();
         Task SaveBook(Book book);
+        Task DeleteBook(string id);
     }
 }

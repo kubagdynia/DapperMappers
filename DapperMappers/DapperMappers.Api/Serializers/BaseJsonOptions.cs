@@ -12,6 +12,5 @@ namespace DapperMappers.Api.Serializers
             IgnoreNullValues = IgnoreNullValues,
             PropertyNamingPolicy = PropertyNamingPolicy,
         };
-
     }
 }

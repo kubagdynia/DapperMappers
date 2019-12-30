@@ -9,5 +9,7 @@
         string GetAllBooks { get; }
 
         string SaveBook { get; }
+
+        string DeleteBook { get; }
     }
 }

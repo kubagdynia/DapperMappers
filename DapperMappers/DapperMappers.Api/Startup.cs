@@ -43,7 +43,7 @@ namespace DapperMappers.Api
 
             services.AddScoped<IBookRepository, BookRepository>();
 
-            services.RegisterAllTypes(new[] { typeof(Book).Assembly });
+            services.RegisterAllDapperMapperTypes(new[] { typeof(Book).Assembly });
 
             services.AddSwagger<Startup>(includeXmlComments: true, name: "v1", title: "Book API", version: "v1");
         }
