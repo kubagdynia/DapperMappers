@@ -109,7 +109,7 @@ namespace DapperMappers.Api.Controllers.V1
         }
 
         /// <summary>
-        /// Delete as book
+        /// Delete a book
         /// </summary>
         /// <param name="request">Book id</param>
         /// <response code="204">Success - The book has been deleted</response>
