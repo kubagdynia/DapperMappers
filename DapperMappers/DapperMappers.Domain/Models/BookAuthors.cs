@@ -1,5 +1,5 @@
+using Dapper.CustomTypeHandlers.TypeHandlers;
 using System.Collections.Generic;
-using DapperMappers.Core.TypeHandlers;
 
 namespace DapperMappers.Domain.Models
 {

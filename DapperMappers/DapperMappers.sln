@@ -3,15 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29609.76
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DapperMappers.Api", "DapperMappers.Api\DapperMappers.Api.csproj", "{697A25D1-9DB8-4716-BE5E-22FC0026085E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DapperMappers.Api", "DapperMappers.Api\DapperMappers.Api.csproj", "{697A25D1-9DB8-4716-BE5E-22FC0026085E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DapperMappers.Core", "DapperMappers.Core\DapperMappers.Core.csproj", "{0173076E-3344-4DC7-B076-45DEFAB6A4CE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DapperMappers.Core", "DapperMappers.Core\DapperMappers.Core.csproj", "{0173076E-3344-4DC7-B076-45DEFAB6A4CE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DapperMappers.Core.Tests", "DapperMappers.Core.Tests\DapperMappers.Core.Tests.csproj", "{96A3DA23-1D3A-4C94-ADF8-28044AD90909}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DapperMappers.Domain", "DapperMappers.Domain\DapperMappers.Domain.csproj", "{4B447ADE-3802-4D4F-904C-DE77BD84108D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DapperMappers.Domain", "DapperMappers.Domain\DapperMappers.Domain.csproj", "{4B447ADE-3802-4D4F-904C-DE77BD84108D}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DapperMappers.Domain.Tests", "DapperMappers.Domain.Tests\DapperMappers.Domain.Tests.csproj", "{830B51F9-D92B-4B4F-BE2D-9A663A690385}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DapperMappers.Domain.Tests", "DapperMappers.Domain.Tests\DapperMappers.Domain.Tests.csproj", "{830B51F9-D92B-4B4F-BE2D-9A663A690385}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,10 +25,6 @@ Global
 		{0173076E-3344-4DC7-B076-45DEFAB6A4CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0173076E-3344-4DC7-B076-45DEFAB6A4CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0173076E-3344-4DC7-B076-45DEFAB6A4CE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{96A3DA23-1D3A-4C94-ADF8-28044AD90909}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{96A3DA23-1D3A-4C94-ADF8-28044AD90909}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{96A3DA23-1D3A-4C94-ADF8-28044AD90909}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{96A3DA23-1D3A-4C94-ADF8-28044AD90909}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4B447ADE-3802-4D4F-904C-DE77BD84108D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4B447ADE-3802-4D4F-904C-DE77BD84108D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4B447ADE-3802-4D4F-904C-DE77BD84108D}.Release|Any CPU.ActiveCfg = Release|Any CPU

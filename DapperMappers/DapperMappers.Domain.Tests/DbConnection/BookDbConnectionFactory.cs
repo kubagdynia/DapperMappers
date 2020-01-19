@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Data;
 using Dapper;
-using DapperMappers.Core.Tests.DbConnection;
 
 namespace DapperMappers.Domain.Tests.DbConnection
 {

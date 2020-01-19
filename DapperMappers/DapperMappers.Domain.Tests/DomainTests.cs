@@ -1,5 +1,5 @@
+using Dapper.CustomTypeHandlers.Extensions;
 using DapperMappers.Core.DbConnection;
-using DapperMappers.Core.Extensions;
 using DapperMappers.Domain.Models;
 using DapperMappers.Domain.Repositories;
 using DapperMappers.Domain.Tests.DbConnection;
@@ -162,10 +162,10 @@ namespace DapperMappers.Domain.Tests
             ServiceCollection services = new ServiceCollection();
 
             // Search the specified assembly and register all classes that implement IXmlObjectType and IJsonObjectType interfaces
-            services.RegisterAllDapperMapperTypes(new[] { typeof(Book).Assembly });
+            services.RegisterDapperCustomTypeHandlers(new[] { typeof(Book).Assembly });
 
             services.AddSingleton<ICommandQuery, CommandQuery>();
-            services.AddTransient<IDbConnectionFactory, BookDbConnectionFactory>();            
+            services.AddTransient<IDbConnectionFactory, BookDbConnectionFactory>();
             services.AddTransient<IBookRepository, BookRepository>();
 
             return services;
