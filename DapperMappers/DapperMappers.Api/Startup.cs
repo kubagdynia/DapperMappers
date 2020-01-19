@@ -1,5 +1,4 @@
 using DapperMappers.Core.DbConnection;
-using DapperMappers.Core.Extensions;
 using DapperMappers.Domain.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -10,6 +9,7 @@ using DapperMappers.Domain.Models;
 using AutoMapper;
 using DapperMappers.Api.Extensions;
 using DapperMappers.Api.Serializers;
+using DapperMappers.Domain;
 
 namespace DapperMappers.Api
 {
@@ -43,7 +43,7 @@ namespace DapperMappers.Api
 
             services.AddScoped<IBookRepository, BookRepository>();
 
-            services.RegisterAllDapperMapperTypes(new[] { typeof(Book).Assembly });
+            services.AddDomain();
 
             services.AddSwagger<Startup>(includeXmlComments: true, name: "v1", title: "Book API", version: "v1");
         }

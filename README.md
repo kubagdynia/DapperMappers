@@ -4,8 +4,7 @@ An example of using Dapper with the custom Xml and Json mappers. Can be used to 
 ### Project structure
 ![](doc/ProjectStructure.png)
 - DapperMappers.Api - Sample REST API that uses serialization and deserialization to XML (uses the MS SQL Server Express database)
-- DapperMappers.Core - Contains type handlers and extension to DBConnection
-- DapperMappers.Core.Tests - Serialization and deserialization tests using SQLite database
+- DapperMappers.Core - DBConnection extension
 - DapperMappers.Domain - Sample domain used by the REST API
 - DapperMappers.Domain.Tests - Domain tests using SQLite database
 
@@ -38,7 +37,7 @@ public class Features
 ```
 - Register these new classes in Startup.cs
 ```csharp
-services.RegisterAllDapperMapperTypes(new[] { typeof(Book).Assembly });
+services.RegisterDapperCustomTypeHandlers(new[] { typeof(Book).Assembly });
 ```
 - Create table in a database that contains a column of the XML type
 ```sql
@@ -100,6 +99,7 @@ List of technologies, frameworks and libraries used for implementation:
 - [.NET Core 3.1](https://dotnet.microsoft.com/download) (platform)
 - [MS SQL Server Express](https://www.microsoft.com/en-us/sql-server/sql-server-editions-express) (database)
 - [Dapper](https://github.com/StackExchange/Dapper) (micro ORM)
+- [Dapper.CustomTypeHandlers](https://github.com/kubagdynia/Dapper.CustomTypeHandlers) (custom handlers)
 - [Automapper](https://github.com/AutoMapper/AutoMapper) (object mapper)
 - [FluentValidation](https://fluentvalidation.net/) (data validation)
 - [System.Text.Json](https://www.nuget.org/packages/System.Text.Json) (JSON serialization/deserialization)
