@@ -1,6 +1,6 @@
 using Dapper;
-using DapperMappers.Core.DbConnection;
 using DapperMappers.Domain.Models;
+using DbConnectionExtensions.DbConnection;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

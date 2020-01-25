@@ -8,7 +8,7 @@ namespace DapperMappers.Domain
     {
         public static IServiceCollection AddDomain(this IServiceCollection services)
         {
-            services.RegisterDapperCustomTypeHandlers(new[] { typeof(Book).Assembly });
+            services.RegisterDapperCustomTypeHandlers(typeof(Book).Assembly);
 
             return services;
         }

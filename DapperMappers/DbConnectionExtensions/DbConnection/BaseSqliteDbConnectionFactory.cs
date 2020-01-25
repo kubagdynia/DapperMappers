@@ -1,36 +1,28 @@
-﻿using DapperMappers.Core.DbConnection;
-using Microsoft.Data.Sqlite;
+﻿using Microsoft.Data.Sqlite;
 using System;
 using System.Data;
 using System.IO;
 
-namespace DapperMappers.Core.Tests.DbConnection
+namespace DbConnectionExtensions.DbConnection
 {
-    public abstract class BaseSqliteConnectionFactory : IDbConnectionFactory
+    public abstract class BaseSqliteDbConnectionFactory : IDbConnectionFactory
     {
+        bool _disposed;
+
         private readonly string _fileName;
         private readonly bool _deleteDbOnExit;
 
-        public BaseSqliteConnectionFactory(string dbFilename, bool deleteDbOnExit = true)
+        public BaseSqliteDbConnectionFactory(string dbFilename, bool deleteDbOnExit = true)
         {
             _fileName = Path.Combine(Environment.CurrentDirectory, dbFilename);
             _deleteDbOnExit = deleteDbOnExit;
 
-            InitializeDatabase();            
+            InitializeDatabase();
         }
 
-        public IDbConnection Connection()
-        {
-            var connectionString = $"DataSource={_fileName}";
-            var conn = new SqliteConnection(connectionString);
+        public IDbConnection Connection() => new SqliteConnection($"DataSource={_fileName}");
 
-            return conn;
-        }
-
-        public IDbConnection Connection(string name)
-        {
-            return Connection();
-        }
+        public IDbConnection Connection(string name) => Connection();
 
         public void Dispose()
         {
@@ -40,18 +32,25 @@ namespace DapperMappers.Core.Tests.DbConnection
 
         protected virtual void Dispose(bool disposing)
         {
+            if (_disposed)
+            {
+                return;
+            }
+
             if (disposing)
             {
                 CleanUp();
             }
+
+            _disposed = true;
         }
 
         public abstract void CreateDb(IDbConnection dbConnection);
 
         private void CleanUp()
         {
-            GC.Collect();
-            GC.WaitForPendingFinalizers();
+            //GC.Collect();
+            //GC.WaitForPendingFinalizers();
 
             if (_deleteDbOnExit && File.Exists(_fileName))
             {
@@ -82,5 +81,7 @@ namespace DapperMappers.Core.Tests.DbConnection
                 }
             }
         }
+
+        ~BaseSqliteDbConnectionFactory() => Dispose(false);
     }
 }

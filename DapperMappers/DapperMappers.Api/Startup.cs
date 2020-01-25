@@ -1,15 +1,14 @@
-using DapperMappers.Core.DbConnection;
 using DapperMappers.Domain.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using DapperMappers.Domain.Models;
 using AutoMapper;
 using DapperMappers.Api.Extensions;
 using DapperMappers.Api.Serializers;
 using DapperMappers.Domain;
+using DbConnectionExtensions.DbConnection;
 
 namespace DapperMappers.Api
 {
@@ -37,7 +36,7 @@ namespace DapperMappers.Api
 
             services.AddAutoMapper(typeof(Startup));
 
-            services.AddTransient<IDbConnectionFactory, DapperDbConnectionFactory>();
+            services.AddTransient<IDbConnectionFactory, BaseDbConnectionFactory>();
 
             services.AddSingleton<ICommandQuery, CommandQuery>();
 

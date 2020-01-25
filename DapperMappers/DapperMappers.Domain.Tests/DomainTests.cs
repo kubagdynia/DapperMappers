@@ -1,8 +1,8 @@
 using Dapper.CustomTypeHandlers.Extensions;
-using DapperMappers.Core.DbConnection;
 using DapperMappers.Domain.Models;
 using DapperMappers.Domain.Repositories;
 using DapperMappers.Domain.Tests.DbConnection;
+using DbConnectionExtensions.DbConnection;
 using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;

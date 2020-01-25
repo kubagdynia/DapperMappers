@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Data;
 
-namespace DapperMappers.Core.DbConnection
+namespace DbConnectionExtensions.DbConnection
 {
     public interface IDbConnectionFactory : IDisposable
     {

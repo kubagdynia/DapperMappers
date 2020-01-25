@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Data;
 using Dapper;
+using DbConnectionExtensions.DbConnection;
 
 namespace DapperMappers.Domain.Tests.DbConnection
 {
-    public class BookDbConnectionFactory : BaseSqliteConnectionFactory
+    public class BookDbConnectionFactory : BaseSqliteDbConnectionFactory
     {
-        public BookDbConnectionFactory() : base($"BookDb_{Guid.NewGuid()}.sqlite")
+        public BookDbConnectionFactory() : base($"BookDb_{Guid.NewGuid()}.sqlite", true)
         {
             
         }
