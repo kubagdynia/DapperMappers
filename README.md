@@ -4,9 +4,9 @@ An example of using Dapper with the custom Xml and Json mappers. Can be used to 
 ### Project structure
 ![](doc/ProjectStructure.png)
 - DapperMappers.Api - Sample REST API that uses serialization and deserialization to XML (uses the MS SQL Server Express database)
-- DapperMappers.Core - DBConnection extension
 - DapperMappers.Domain - Sample domain used by the REST API
 - DapperMappers.Domain.Tests - Domain tests using SQLite database
+- DbConnectionExtensions - DBConnection extension
 
 ### How to use
 - Create class that implements IXmlObjectType or IJsonObjectType interface
@@ -37,7 +37,7 @@ public class Features
 ```
 - Register these new classes in Startup.cs
 ```csharp
-services.RegisterDapperCustomTypeHandlers(new[] { typeof(Book).Assembly });
+services.RegisterDapperCustomTypeHandlers(typeof(Book).Assembly);
 ```
 - Create table in a database that contains a column of the XML type
 ```sql
@@ -67,7 +67,9 @@ public async Task SaveBook(Book book)
 - Download and install [MS SQL Server Express](https://www.microsoft.com/en-us/sql-server/sql-server-editions-express)
 - Create an empty database called BaseDB and run [CreateDapperMappersDbSQLServer.sql](https://github.com/kubagdynia/DapperMappers/blob/master/Sql/CreateDapperMappersDbSQLServer.sql) script
 - Clone or download source code
-> git clone https://github.com/kubagdynia/DapperMappers.git
+```
+git clone https://github.com/kubagdynia/DapperMappers.git
+```
 - Set a database connection string in the API project in the [appsettings.json](https://github.com/kubagdynia/DapperMappers/blob/master/DapperMappers/DapperMappers.Api/appsettings.json)
 ```json
 {
@@ -78,10 +80,13 @@ public async Task SaveBook(Book book)
 ```
 - If you run from IDE set the Startup Item to the DapperMappers.API project, not IIS Express
 - Run API project from the command line
-> dotnet run --project .\DapperMappers\DapperMappers.Api\
+```
+dotnet run --project .\DapperMappers\DapperMappers.Api\
+```
 - Open the API documentation in the browser
-> https://localhost:5001/swagger
-
+```
+https://localhost:5001/swagger
+```
 ![](doc/SwaggerBookAPI.png)
 
 ### How to Test
@@ -90,9 +95,13 @@ Every commit or pull request is built and tested on the Continuous Integration s
 To test locally:
 - Download and install [.NET Core 3.1 SDK](https://dotnet.microsoft.com/download)
 - Clone or download source code
-> git clone https://github.com/kubagdynia/DapperMappers.git
+```
+git clone https://github.com/kubagdynia/DapperMappers.git
+```
 - Start tests from the command line
-> dotnet test ./DapperMappers/
+```
+dotnet test ./DapperMappers/
+```
 
 ### Technologies
 List of technologies, frameworks and libraries used for implementation:
