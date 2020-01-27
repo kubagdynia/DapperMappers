@@ -1,17 +1,19 @@
 ﻿using System;
 using System.Data;
 using Dapper;
+using DbConnectionExtensions.DbConnection;
+using Microsoft.Extensions.Configuration;
 
 namespace DapperMappers.Domain.Tests.DbConnection
 {
-    public class BookDbConnectionFactory : BaseSqliteConnectionFactory
+    public class BookDbConnectionFactory : SqliteDbConnectionFactory
     {
-        public BookDbConnectionFactory() : base($"BookDb_{Guid.NewGuid()}.sqlite")
+        public BookDbConnectionFactory(IConfiguration config, string connectionName) : base(config, connectionName)
         {
             
         }
 
-        public override void CreateDb(IDbConnection dbConnection)
+        protected override void CreateDb(IDbConnection dbConnection)
         {
             dbConnection.Execute(
                 @"CREATE TABLE Books

@@ -1,15 +1,14 @@
-using DapperMappers.Core.DbConnection;
 using DapperMappers.Domain.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using DapperMappers.Domain.Models;
 using AutoMapper;
 using DapperMappers.Api.Extensions;
 using DapperMappers.Api.Serializers;
 using DapperMappers.Domain;
+using DbConnectionExtensions.DbConnection;
 
 namespace DapperMappers.Api
 {
@@ -37,11 +36,15 @@ namespace DapperMappers.Api
 
             services.AddAutoMapper(typeof(Startup));
 
-            services.AddTransient<IDbConnectionFactory, DapperDbConnectionFactory>();
-
             services.AddSingleton<ICommandQuery, CommandQuery>();
+            
+            //services.AddTransient<IDbConnectionFactory, DbConnectionFactory>();
+            services.AddTransient<IDbConnectionFactory>(x =>
+                ActivatorUtilities.CreateInstance<DbConnectionFactory>(x, "DefaultConnection"));
 
             services.AddScoped<IBookRepository, BookRepository>();
+            // services.AddScoped<IBookRepository>(x =>
+            //     ActivatorUtilities.CreateInstance<BookRepository>(x, "DefaultConnection"));
 
             services.AddDomain();
 
