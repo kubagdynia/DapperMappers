@@ -36,11 +36,15 @@ namespace DapperMappers.Api
 
             services.AddAutoMapper(typeof(Startup));
 
-            services.AddTransient<IDbConnectionFactory, BaseDbConnectionFactory>();
-
             services.AddSingleton<ICommandQuery, CommandQuery>();
+            
+            //services.AddTransient<IDbConnectionFactory, DbConnectionFactory>();
+            services.AddTransient<IDbConnectionFactory>(x =>
+                ActivatorUtilities.CreateInstance<DbConnectionFactory>(x, "DefaultConnection"));
 
             services.AddScoped<IBookRepository, BookRepository>();
+            // services.AddScoped<IBookRepository>(x =>
+            //     ActivatorUtilities.CreateInstance<BookRepository>(x, "DefaultConnection"));
 
             services.AddDomain();
 

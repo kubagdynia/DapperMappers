@@ -9,6 +9,7 @@ using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
 
 namespace DapperMappers.Domain.Tests
 {
@@ -161,14 +162,42 @@ namespace DapperMappers.Domain.Tests
         {
             ServiceCollection services = new ServiceCollection();
 
+            IConfiguration config = GetIConfiguration();
+            services.AddSingleton(config);
+
             // Search the specified assembly and register all classes that implement IXmlObjectType and IJsonObjectType interfaces
             services.RegisterDapperCustomTypeHandlers(new[] { typeof(Book).Assembly });
 
             services.AddSingleton<ICommandQuery, CommandQuery>();
-            services.AddTransient<IDbConnectionFactory, BookDbConnectionFactory>();
-            services.AddTransient<IBookRepository, BookRepository>();
+            
+            // services.AddTransient<IDbConnectionFactory>(x =>
+            //     ActivatorUtilities.CreateInstance<BookDbConnectionFactory>(x, "DefaultConnection"));
+            
+            services.AddTransient<IDbConnectionFactory>(x =>
+                ActivatorUtilities.CreateInstance<BookDbConnectionFactory>(x, "DefaultConnection5"));
+            
+            //services.AddTransient<IBookRepository, BookRepository>();
+
+            services.AddTransient<IBookRepository>(x =>
+                ActivatorUtilities.CreateInstance<BookRepository>(x, "DefaultConnection5"));
 
             return services;
+        }
+
+        private static IConfiguration GetIConfiguration()
+        {
+            var myConfiguration = new Dictionary<string, string>
+            {
+                {"SQLiteConnectionStrings:DefaultConnection:DbFilename", $"BookDb_{Guid.NewGuid()}.sqlite"},
+                {"SQLiteConnectionStrings:DefaultConnection:DeleteDbFileOnExit", "true"},
+                
+                {"SQLiteConnectionStrings:DefaultConnection5:DbFilename", $"BookDb5_{Guid.NewGuid()}.sqlite"},
+                {"SQLiteConnectionStrings:DefaultConnection5:DeleteDbFileOnExit", "true"}
+            };
+            
+            return new ConfigurationBuilder()
+                .AddInMemoryCollection(myConfiguration)
+                .Build();
         }
     }
 }

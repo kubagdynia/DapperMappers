@@ -1,7 +1,9 @@
+using System;
 using Dapper;
 using DapperMappers.Domain.Models;
 using DbConnectionExtensions.DbConnection;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace DapperMappers.Domain.Repositories
@@ -11,9 +13,17 @@ namespace DapperMappers.Domain.Repositories
         private readonly IDbConnectionFactory _connectionFactory;
         private readonly ICommandQuery _commandQuery;
 
-        public BookRepository(IDbConnectionFactory connectionFactory, ICommandQuery commandQuery)
+        public BookRepository(IEnumerable<IDbConnectionFactory> connectionFactory, ICommandQuery commandQuery, string connectionName = "")
         {
-            _connectionFactory = connectionFactory;
+            _connectionFactory = string.IsNullOrEmpty(connectionName)
+                ? connectionFactory.FirstOrDefault()
+                : connectionFactory.FirstOrDefault(c => c.ConnectionName == connectionName);
+            
+            if (_connectionFactory == null)
+            {
+                throw new ArgumentNullException(nameof(connectionFactory));
+            }
+            
             _commandQuery = commandQuery;
         }
 
