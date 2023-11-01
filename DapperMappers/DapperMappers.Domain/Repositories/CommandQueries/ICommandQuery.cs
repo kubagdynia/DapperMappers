@@ -1,4 +1,4 @@
-﻿namespace DapperMappers.Domain.Repositories
+﻿namespace DapperMappers.Domain.Repositories.CommandQueries
 {
     public interface ICommandQuery
     {

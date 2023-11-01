@@ -4,10 +4,10 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using AutoMapper;
 using DapperMappers.Api.Extensions;
 using DapperMappers.Api.Serializers;
-using DapperMappers.Domain;
+using DapperMappers.Domain.Extensions;
+using DapperMappers.Domain.Repositories.CommandQueries;
 using DbConnectionExtensions.DbConnection;
 
 namespace DapperMappers.Api

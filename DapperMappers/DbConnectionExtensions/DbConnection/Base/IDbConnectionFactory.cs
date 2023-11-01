@@ -1,9 +1,8 @@
-﻿using System;
-using System.Data;
+﻿using System.Data;
 
 namespace DbConnectionExtensions.DbConnection
 {
-    public interface IDbConnectionFactory : IDisposable
+    public interface IDbConnectionFactory
     {
         string ConnectionName { get; }
         
