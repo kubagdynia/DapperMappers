@@ -1,4 +1,7 @@
 # DapperMappers
+
+[![CI](https://img.shields.io/github/actions/workflow/status/kubagdynia/DapperMappers/dotnet.yml?branch=master)](https://github.com/kubagdynia/DapperMappers/actions?query=branch%3Amaster)
+
 An example of using Dapper with the custom Xml and Json mappers. Can be used to serialize and deserialize objects by Dapper.
 
 ### Project structure
@@ -9,7 +12,7 @@ An example of using Dapper with the custom Xml and Json mappers. Can be used to 
 - DbConnectionExtensions - DBConnection extension
 
 ### How to use
-- Create class that implements IXmlObjectType or IJsonObjectType interface
+- Create a class that implements IXmlObjectType or IJsonObjectType interface
 ```csharp
 public class Book
 {
@@ -39,7 +42,7 @@ public class Features
 ```csharp
 services.RegisterDapperCustomTypeHandlers(typeof(Book).Assembly);
 ```
-- Create table in a database that contains a column of the XML type
+- Create a table in the database that contains a column of the XML type
 ```sql
 CREATE TABLE [dbo].[Books](
 	[Id] bigint IDENTITY(1,1) NOT NULL,
@@ -63,9 +66,9 @@ public async Task SaveBook(Book book)
 ```
 
 ### How to Run test REST API
-- Download and install [.NET Core 3.1 SDK](https://dotnet.microsoft.com/download)
-- Download and install [MS SQL Server Express](https://www.microsoft.com/en-us/sql-server/sql-server-editions-express)
-- Create an empty database called BaseDB and run [CreateDapperMappersDbSQLServer.sql](https://github.com/kubagdynia/DapperMappers/blob/master/Sql/CreateDapperMappersDbSQLServer.sql) script
+- Download and install [.NET 6.0 SDK](https://dotnet.microsoft.com/en-us/download/dotnet/7.0)
+- Download and install [MS SQL Server Express](https://learn.microsoft.com/en-us/sql/database-engine/configure-windows/sql-server-express-localdb)
+- Create an empty database called BookDB and run [CreateDapperMappersDbSQLServer.sql](https://github.com/kubagdynia/DapperMappers/blob/master/Sql/CreateDapperMappersDbSQLServer.sql) script
 - Clone or download source code
 ```
 git clone https://github.com/kubagdynia/DapperMappers.git
@@ -74,26 +77,26 @@ git clone https://github.com/kubagdynia/DapperMappers.git
 ```json
 {
   "ConnectionStrings": {
-    "DefaultConnection": "Data Source=Localhost\\SQLEXPRESS2014;Initial Catalog=BookDB;Integrated Security=True;MultipleActiveResultSets=True;"
+    "DefaultConnection": "Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=BookDB;Integrated Security=True;MultipleActiveResultSets=True;"
   }  
 }
 ```
-- If you run from IDE set the Startup Item to the DapperMappers.API project, not IIS Express
-- Run API project from the command line
+- If you are running from IDE set the Startup Item to the DapperMappers.API project, not IIS Express
+- Running the API project from the command line
 ```
 dotnet run --project .\DapperMappers\DapperMappers.Api\
 ```
-- Open the API documentation in the browser
+- Open the API documentation in your browser
 ```
 https://localhost:5001/swagger
 ```
 ![](doc/SwaggerBookAPI.png)
 
 ### How to Test
-Every commit or pull request is built and tested on the Continuous Integration system ([Travis CI](https://travis-ci.com/kubagdynia/DapperMappers/branches)).
+Every commit or pull request is built and tested on the Continuous Integration system.
 
 To test locally:
-- Download and install [.NET Core 3.1 SDK](https://dotnet.microsoft.com/download)
+- Download and install [.NET 7.0 SDK](https://dotnet.microsoft.com/en-us/download/dotnet/7.0)
 - Clone or download source code
 ```
 git clone https://github.com/kubagdynia/DapperMappers.git
@@ -105,23 +108,17 @@ dotnet test ./DapperMappers/
 
 ### Technologies
 List of technologies, frameworks and libraries used for implementation:
-- [.NET Core 3.1](https://dotnet.microsoft.com/download) (platform)
-- [MS SQL Server Express](https://www.microsoft.com/en-us/sql-server/sql-server-editions-express) (database)
+- [.NET 7.0](https://dotnet.microsoft.com/en-us/download/dotnet/7.0) (platform)
+- [MS SQL Server Express](https://learn.microsoft.com/en-us/sql/database-engine/configure-windows/sql-server-express-localdb) (database)
 - [Dapper](https://github.com/StackExchange/Dapper) (micro ORM)
 - [Dapper.CustomTypeHandlers](https://github.com/kubagdynia/Dapper.CustomTypeHandlers) (custom handlers)
 - [Automapper](https://github.com/AutoMapper/AutoMapper) (object mapper)
 - [FluentValidation](https://fluentvalidation.net/) (data validation)
 - [System.Text.Json](https://www.nuget.org/packages/System.Text.Json) (JSON serialization/deserialization)
-- [Swashbuckle](https://github.com/domaindrivendev/Swashbuckle) (Swagger automated API documentation)
+- [Swashbuckle.AspNetCore](https://github.com/domaindrivendev/Swashbuckle.AspNetCore) (Swagger automated API documentation)
 - [NUnit](https://nunit.org/) (testing framework)
 - [SQLite](https://www.sqlite.org/) (database for testing purpose)
 - [FluentAssertions](https://github.com/fluentassertions/fluentassertions) (fluent API for asserting the result of unit tests)
 
 ### License
 This project is licensed under the [MIT License](https://opensource.org/licenses/MIT).
-
-### Builds and Tests
-| Branch       | Status      |
-|--------------|-------------|
-| [master](https://travis-ci.com/kubagdynia/DapperMappers/branches)       | [![Build Status](https://travis-ci.com/kubagdynia/DapperMappers.svg?branch=master)](https://travis-ci.com/kubagdynia/DapperMappers)|
-| [develop](https://travis-ci.com/kubagdynia/DapperMappers/branches)      | [![Build Status](https://travis-ci.com/kubagdynia/DapperMappers.svg?branch=develop)](https://travis-ci.com/kubagdynia/DapperMappers)|
