@@ -22,7 +22,7 @@ namespace DapperMappers.Api.SwaggerExamples
                 {
                     Authors = new List<AuthorResource>
                     {
-                        new AuthorResource
+                        new()
                         {
                             Name = "Alexey Zimarev",
                             Description = "Alexey Zimarev is a ..."
@@ -33,30 +33,30 @@ namespace DapperMappers.Api.SwaggerExamples
                 {
                     Chapters = new List<ChapterResource>
                     {
-                        new ChapterResource
+                        new()
                         {
                             Number = "1",
                             Name = "Why Domain-Driven Design?",
                             Subsections = new List<SubsectionResource>
                             {
-                                new SubsectionResource
+                                new()
                                 {
                                     Number = "1",
                                     Name = "Understanding the problem"
                                 },
-                                new SubsectionResource
+                                new()
                                 {
                                     Number = "2",
                                     Name = "Dealing with complexity"
                                 }
                             }
                         },
-                        new ChapterResource
+                        new()
                         {
                             Number = "2",
                             Name = "Language and Context"
                         },
-                        new ChapterResource
+                        new()
                         {
                             Number = "3",
                             Name = "EventStorming"

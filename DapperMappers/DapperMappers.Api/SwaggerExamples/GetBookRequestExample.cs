@@ -6,6 +6,6 @@ namespace DapperMappers.Api.SwaggerExamples
 {
     public class GetBookRequestExample : IExamplesProvider<GetBookRequest>
     {
-        public GetBookRequest GetExamples() => new GetBookRequest { Id = Guid.NewGuid() };
+        public GetBookRequest GetExamples() => new() { Id = Guid.NewGuid() };
     }
 }

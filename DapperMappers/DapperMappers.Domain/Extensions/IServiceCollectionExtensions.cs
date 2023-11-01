@@ -2,9 +2,9 @@
 using DapperMappers.Domain.Models;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace DapperMappers.Domain
+namespace DapperMappers.Domain.Extensions
 {
-    public static class IServiceCollectionExtension
+    public static class ServiceCollectionExtension
     {
         public static IServiceCollection AddDomain(this IServiceCollection services)
         {

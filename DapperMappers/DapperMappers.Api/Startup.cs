@@ -1,13 +1,14 @@
+using System.Text.Json.Serialization;
 using DapperMappers.Domain.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using AutoMapper;
 using DapperMappers.Api.Extensions;
 using DapperMappers.Api.Serializers;
-using DapperMappers.Domain;
+using DapperMappers.Domain.Extensions;
+using DapperMappers.Domain.Repositories.CommandQueries;
 using DbConnectionExtensions.DbConnection;
 
 namespace DapperMappers.Api
@@ -26,7 +27,7 @@ namespace DapperMappers.Api
         {
             services.AddControllers().AddJsonOptions(options =>
             {
-                options.JsonSerializerOptions.IgnoreNullValues = BaseJsonOptions.IgnoreNullValues;
+                options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
                 options.JsonSerializerOptions.PropertyNamingPolicy = BaseJsonOptions.PropertyNamingPolicy;
 
             }).ConfigureApiBehaviorOptions(options =>

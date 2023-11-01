@@ -9,73 +9,64 @@ using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using DapperMappers.Domain.Repositories.CommandQueries;
 using Microsoft.Extensions.Configuration;
 
 namespace DapperMappers.Domain.Tests
 {
     public class Tests
     {
-        [Test, Order(1)]
-        public void Domain_Test_Should_Be_Ok()
-        {
-            1.Should().Equals(1);
-        }
-
-        [Test, Order(2)]
+        [Test]
         public async Task Book_Stored_In_Database_Should_Be_Restored_Properly()
         {
             ServiceCollection services = PrepareServiceCollection();
 
             ServiceProvider serviceProvider = services.BuildServiceProvider();
 
-            using (IServiceScope scope = serviceProvider.CreateScope())
-            {
-                var scopedServices = scope.ServiceProvider;
+            using IServiceScope scope = serviceProvider.CreateScope();
+            var scopedServices = scope.ServiceProvider;
 
-                IBookRepository bookRepository = scopedServices.GetRequiredService<IBookRepository>();
-                Book book = CreateTestBook();
+            IBookRepository bookRepository = scopedServices.GetRequiredService<IBookRepository>();
+            Book book = CreateTestBook();
 
-                // Act
-                await bookRepository.SaveBook(book);
-                Book retrievedBook = await bookRepository.GetBook(book.Id);
-                book.InternalId = retrievedBook.InternalId;
+            // Act
+            await bookRepository.SaveBook(book);
+            Book retrievedBook = await bookRepository.GetBook(book.Id);
+            book.InternalId = retrievedBook.InternalId;
 
-                // Assert
-                retrievedBook.Should().NotBeNull();
-                retrievedBook.Should().BeEquivalentTo(book);
-                retrievedBook.Description.Should().BeEquivalentTo(book.Description);
-                retrievedBook.Authors.Should().BeEquivalentTo(book.Authors);
-                retrievedBook.TableOfContents.Should().BeEquivalentTo(book.TableOfContents);
-            }
+            // Assert
+            retrievedBook.Should().NotBeNull();
+            retrievedBook.Should().BeEquivalentTo(book);
+            retrievedBook.Description.Should().BeEquivalentTo(book.Description);
+            retrievedBook.Authors.Should().BeEquivalentTo(book.Authors);
+            retrievedBook.TableOfContents.Should().BeEquivalentTo(book.TableOfContents);
         }
 
-        [Test, Order(3)]
+        [Test]
         public async Task Deleting_A_Book_Should_Delete_The_Book_From_The_Database()
         {
             ServiceCollection services = PrepareServiceCollection();
 
             ServiceProvider serviceProvider = services.BuildServiceProvider();
 
-            using (IServiceScope scope = serviceProvider.CreateScope())
-            {
-                var scopedServices = scope.ServiceProvider;
+            using IServiceScope scope = serviceProvider.CreateScope();
+            var scopedServices = scope.ServiceProvider;
 
-                IBookRepository bookRepository = scopedServices.GetRequiredService<IBookRepository>();
-                Book book = CreateTestBook();
+            IBookRepository bookRepository = scopedServices.GetRequiredService<IBookRepository>();
+            Book book = CreateTestBook();
 
-                // Act
-                await bookRepository.SaveBook(book);
-                Book retrievedBook = await bookRepository.GetBook(book.Id);
-                await bookRepository.DeleteBook(book.Id);
-                Book retrievedDeletedBook = await bookRepository.GetBook(book.Id);
+            // Act
+            await bookRepository.SaveBook(book);
+            Book retrievedBook = await bookRepository.GetBook(book.Id);
+            await bookRepository.DeleteBook(book.Id);
+            Book retrievedDeletedBook = await bookRepository.GetBook(book.Id);
 
-                book.InternalId = retrievedBook.InternalId;
+            book.InternalId = retrievedBook.InternalId;
 
-                // Assert
-                retrievedBook.Should().NotBeNull();
-                retrievedBook.Should().BeEquivalentTo(book);
-                retrievedDeletedBook.Should().BeNull();
-            }
+            // Assert
+            retrievedBook.Should().NotBeNull();
+            retrievedBook.Should().BeEquivalentTo(book);
+            retrievedDeletedBook.Should().BeNull();
         }
 
         private static Book CreateTestBook()
