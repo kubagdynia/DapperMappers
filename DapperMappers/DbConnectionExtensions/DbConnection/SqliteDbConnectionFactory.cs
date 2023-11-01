@@ -30,25 +30,7 @@ namespace DbConnectionExtensions.DbConnection
 
         public override IDbConnection Connection() => new SqliteConnection($"DataSource={_fileName}");
 
-        protected override void DisposeManageResource()
-        {
-            
-        }
-
-        protected override void DisposeUnManageResource()
-        {
-            CleanUp();
-        }
-
         protected abstract void CreateDb(IDbConnection dbConnection);
-
-        private void CleanUp()
-        {
-            if (_deleteDbOnExit && File.Exists(_fileName))
-            {
-                File.Delete(_fileName);
-            }
-        }
 
         private void InitializeDatabase()
         {

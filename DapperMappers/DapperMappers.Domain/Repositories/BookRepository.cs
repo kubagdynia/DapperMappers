@@ -5,6 +5,7 @@ using DbConnectionExtensions.DbConnection;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DapperMappers.Domain.Repositories.CommandQueries;
 
 namespace DapperMappers.Domain.Repositories
 {
@@ -29,46 +30,36 @@ namespace DapperMappers.Domain.Repositories
 
         public async Task<Book> GetBook(long internalId)
         {
-            using (var conn = _connectionFactory.Connection())
-            {
-                Book book = await conn.QueryFirstOrDefaultAsync<Book>(_commandQuery.GetBookByInternalId, new { internalId });
-                return book;
-            }
+            using var conn = _connectionFactory.Connection();
+            Book book = await conn.QueryFirstOrDefaultAsync<Book>(_commandQuery.GetBookByInternalId, new { internalId });
+            return book;
         }
 
         public async Task<Book> GetBook(string id)
         {
-            using (var conn = _connectionFactory.Connection())
-            {
-                Book book = await conn.QueryFirstOrDefaultAsync<Book>(_commandQuery.GetBookById, new { id });
-                return book;
-            }
+            using var conn = _connectionFactory.Connection();
+            Book book = await conn.QueryFirstOrDefaultAsync<Book>(_commandQuery.GetBookById, new { id });
+            return book;
         }
 
         public async Task<IEnumerable<Book>> GetAllBooks()
         {
-            using (var conn = _connectionFactory.Connection())
-            {
-                IEnumerable<Book> books = await conn.QueryAsync<Book>(_commandQuery.GetAllBooks);
-                return books;
-            }
+            using var conn = _connectionFactory.Connection();
+            IEnumerable<Book> books = await conn.QueryAsync<Book>(_commandQuery.GetAllBooks);
+            return books;
         }
 
         public async Task SaveBook(Book book)
         {
-            using (var conn = _connectionFactory.Connection())
-            {
-                //book.InternalId = await conn.QueryFirstAsync<long>(_commandQuery.SaveBook, book);
-                await conn.ExecuteAsync(_commandQuery.SaveBook, book);
-            }
+            using var conn = _connectionFactory.Connection();
+            //book.InternalId = await conn.QueryFirstAsync<long>(_commandQuery.SaveBook, book);
+            await conn.ExecuteAsync(_commandQuery.SaveBook, book);
         }
 
         public async Task DeleteBook(string id)
         {
-            using (var conn = _connectionFactory.Connection())
-            {
-                await conn.ExecuteAsync(_commandQuery.DeleteBook, new { id });
-            }
+            using var conn = _connectionFactory.Connection();
+            await conn.ExecuteAsync(_commandQuery.DeleteBook, new { id });
         }
     }
 }

@@ -17,9 +17,5 @@ namespace DbConnectionExtensions.DbConnection
         }
 
         public override IDbConnection Connection() => new SqlConnection(_config.GetConnectionString(ConnectionName));
-
-        protected override void DisposeManageResource() { }
-
-        protected override void DisposeUnManageResource() { }
     }
 }

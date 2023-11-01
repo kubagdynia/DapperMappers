@@ -20,7 +20,7 @@ namespace DapperMappers.Api.SwaggerExamples
                 {
                     Authors = new List<AuthorResource>
                     {
-                        new AuthorResource
+                        new()
                         {
                             Name = "Alexey Zimarev",
                             Description = "Alexey Zimarev is a software architect with a present focus on domain models, Domain-Driven Design (DDD), event sourcing, message-driven systems and microservices, coaching, and mentoring. Alexey is also a contributor to several open source projects, such as RestSharp and MassTransit, and is the organizer of the DDD Norway meetup."
@@ -31,60 +31,60 @@ namespace DapperMappers.Api.SwaggerExamples
                 {
                     Chapters = new List<ChapterResource>
                     {
-                        new ChapterResource
+                        new()
                         {
                             Number = "1",
                             Name = "Why Domain-Driven Design?",
                             Subsections = new List<SubsectionResource>
                             {
-                                new SubsectionResource
+                                new()
                                 {
                                     Number = "1",
                                     Name = "Understanding the problem"
                                 },
-                                new SubsectionResource
+                                new()
                                 {
                                     Number = "2",
                                     Name = "Dealing with complexity"
                                 },
-                                new SubsectionResource
+                                new()
                                 {
                                     Number = "3",
                                     Name = "Knowledge"
                                 },
-                                new SubsectionResource
+                                new()
                                 {
                                     Number = "4",
                                     Name = "Summary"
                                 },
-                                new SubsectionResource
+                                new()
                                 {
                                     Number = "5",
                                     Name = "Further reading"
                                 }
                             }
                         },
-                        new ChapterResource
+                        new()
                         {
                             Number = "2",
                             Name = "Language and Context"
                         },
-                        new ChapterResource
+                        new()
                         {
                             Number = "2",
                             Name = "Language and Context"
                         },
-                        new ChapterResource
+                        new()
                         {
                             Number = "3",
                             Name = "EventStorming"
                         },
-                        new ChapterResource
+                        new()
                         {
                             Number = "4",
                             Name = "Designing the Model"
                         },
-                        new ChapterResource
+                        new()
                         {
                             Number = "5",
                             Name = "Implementing the Model"
