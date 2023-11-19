@@ -66,7 +66,7 @@ public async Task SaveBook(Book book)
 ```
 
 ### How to Run test REST API
-- Download and install [.NET 6.0 SDK](https://dotnet.microsoft.com/en-us/download/dotnet/7.0)
+- Download and install [.NET 8.0 SDK](https://dotnet.microsoft.com/en-us/download/dotnet/8.0)
 - Download and install [MS SQL Server Express](https://learn.microsoft.com/en-us/sql/database-engine/configure-windows/sql-server-express-localdb)
 - Create an empty database called BookDB and run [CreateDapperMappersDbSQLServer.sql](https://github.com/kubagdynia/DapperMappers/blob/master/Sql/CreateDapperMappersDbSQLServer.sql) script
 - Clone or download source code
@@ -96,7 +96,7 @@ https://localhost:5001/swagger
 Every commit or pull request is built and tested on the Continuous Integration system.
 
 To test locally:
-- Download and install [.NET 7.0 SDK](https://dotnet.microsoft.com/en-us/download/dotnet/7.0)
+- Download and install [.NET 8.0 SDK](https://dotnet.microsoft.com/en-us/download/dotnet/8.0)
 - Clone or download source code
 ```
 git clone https://github.com/kubagdynia/DapperMappers.git
@@ -108,7 +108,7 @@ dotnet test ./DapperMappers/
 
 ### Technologies
 List of technologies, frameworks and libraries used for implementation:
-- [.NET 7.0](https://dotnet.microsoft.com/en-us/download/dotnet/7.0) (platform)
+- [.NET 8.0](https://dotnet.microsoft.com/en-us/download/dotnet/8.0) (platform)
 - [MS SQL Server Express](https://learn.microsoft.com/en-us/sql/database-engine/configure-windows/sql-server-express-localdb) (database)
 - [Dapper](https://github.com/StackExchange/Dapper) (micro ORM)
 - [Dapper.CustomTypeHandlers](https://github.com/kubagdynia/Dapper.CustomTypeHandlers) (custom handlers)
