@@ -2,7 +2,7 @@
 
 namespace DapperMappers.Api.Contracts.V1.Resources
 {
-    public class BookDescriptionResource
+    public record BookDescriptionResource
     {
         public LearnResource Learn { get; set; }
 
@@ -11,12 +11,12 @@ namespace DapperMappers.Api.Contracts.V1.Resources
         public FeaturesResource Features { get; set; }
     }
 
-    public class LearnResource
+    public record LearnResource
     {
         public List<string> Points { get; set; }
     }
 
-    public class FeaturesResource
+    public record FeaturesResource
     {
         public List<string> Points { get; set; }
     }

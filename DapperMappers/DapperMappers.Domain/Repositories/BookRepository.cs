@@ -31,21 +31,21 @@ namespace DapperMappers.Domain.Repositories
         public async Task<Book> GetBook(long internalId)
         {
             using var conn = _connectionFactory.Connection();
-            Book book = await conn.QueryFirstOrDefaultAsync<Book>(_commandQuery.GetBookByInternalId, new { internalId });
+            var book = await conn.QueryFirstOrDefaultAsync<Book>(_commandQuery.GetBookByInternalId, new { internalId });
             return book;
         }
 
         public async Task<Book> GetBook(string id)
         {
             using var conn = _connectionFactory.Connection();
-            Book book = await conn.QueryFirstOrDefaultAsync<Book>(_commandQuery.GetBookById, new { id });
+            var book = await conn.QueryFirstOrDefaultAsync<Book>(_commandQuery.GetBookById, new { id });
             return book;
         }
 
         public async Task<IEnumerable<Book>> GetAllBooks()
         {
             using var conn = _connectionFactory.Connection();
-            IEnumerable<Book> books = await conn.QueryAsync<Book>(_commandQuery.GetAllBooks);
+            var books = await conn.QueryAsync<Book>(_commandQuery.GetAllBooks);
             return books;
         }
 

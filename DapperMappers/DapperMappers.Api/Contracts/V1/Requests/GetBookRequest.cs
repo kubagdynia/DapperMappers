@@ -3,7 +3,7 @@ using System;
 
 namespace DapperMappers.Api.Contracts.V1.Requests
 {
-    public class GetBookRequest
+    public record GetBookRequest
     {
         /// <summary>
         /// Book id

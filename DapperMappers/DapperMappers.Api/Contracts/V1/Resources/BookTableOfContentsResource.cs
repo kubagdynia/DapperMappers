@@ -2,21 +2,21 @@
 
 namespace DapperMappers.Api.Contracts.V1.Resources
 {
-    public class BookTableOfContentsResource
+    public record BookTableOfContentsResource
     {
         public List<ChapterResource> Chapters { get; set; }
     }
 
-    public class ChapterResource
+    public record ChapterResource
     {
         public string Number { get; set; }
 
         public string Name { get; set; }
 
-        public List<SubsectionResource> Subsections { get; set; }
+        public List<SubsectionResource>? Subsections { get; set; }
     }
 
-    public class SubsectionResource
+    public record SubsectionResource
     {
         public string Number { get; set; }
 

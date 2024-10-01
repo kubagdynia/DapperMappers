@@ -2,7 +2,7 @@
 
 namespace DapperMappers.Api.Contracts.V1.Resources
 {
-    public class BookResource
+    public record BookResource
     {
         public string Id { get; set; }
 

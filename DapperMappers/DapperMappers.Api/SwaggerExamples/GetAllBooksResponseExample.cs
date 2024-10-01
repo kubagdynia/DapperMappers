@@ -17,13 +17,13 @@ namespace DapperMappers.Api.SwaggerExamples
                 GetBookResource()
             };
 
-            GetAllBooksResponse response = new GetAllBooksResponse(bookResources, StatusCodes.Status200OK);
+            var response = new GetAllBooksResponse(bookResources, StatusCodes.Status200OK);
             return response;
         }
 
         private BookResource GetBookResource()
         {
-            BookResource bookResource = new BookResource
+            var bookResource = new BookResource
             {
                 Id = Guid.NewGuid().ToString(),
                 Title = "Hands-On Domain-Driven Design with .NET Core",
@@ -32,68 +32,72 @@ namespace DapperMappers.Api.SwaggerExamples
                 DateOfPublication = new DateTime(2019, 04, 30),
                 Authors = new BookAuthorsResource
                 {
-                    Authors = new List<AuthorResource>
-                    {
+                    Authors =
+                    [
                         new AuthorResource
                         {
                             Name = "Alexey Zimarev",
                             Description = "Alexey Zimarev is a ..."
                         }
-                    }
+                    ]
                 },
                 TableOfContents = new BookTableOfContentsResource
                 {
-                    Chapters = new List<ChapterResource>
-                    {
+                    Chapters =
+                    [
                         new ChapterResource
                         {
                             Number = "1",
                             Name = "Why Domain-Driven Design?",
-                            Subsections = new List<SubsectionResource>
-                            {
+                            Subsections =
+                            [
                                 new SubsectionResource
                                 {
                                     Number = "1",
                                     Name = "Understanding the problem"
                                 },
+
                                 new SubsectionResource
                                 {
                                     Number = "2",
                                     Name = "Dealing with complexity"
                                 }
-                            }
+                            ]
                         },
+
                         new ChapterResource
                         {
                             Number = "2",
                             Name = "Language and Context"
                         },
+
                         new ChapterResource
                         {
                             Number = "3",
                             Name = "EventStorming"
-                        },
-                    }
+                        }
+
+                    ]
                 },
                 ShortDescription = "Solve complex business problems...",
                 Description = new BookDescriptionResource
                 {
                     Learn = new LearnResource
                     {
-                        Points = new List<string>
-                        {
+                        Points =
+                        [
                             "Discover and...",
-                            "Avoid common...",
-                        }
+                            "Avoid common..."
+                        ]
                     },
                     About = @"Developers across the world...",
                     Features = new FeaturesResource
                     {
-                        Points = new List<string>
-                        {
+                        Points =
+                        [
                             "Apply DDD principles...",
-                            "Learn how DDD...",
-                        }
+                            "Learn how DDD..."
+                        ]
                     }
                 },
                 Publisher = "Packt",

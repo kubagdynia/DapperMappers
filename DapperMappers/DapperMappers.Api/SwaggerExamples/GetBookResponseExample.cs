@@ -3,7 +3,6 @@ using DapperMappers.Api.Contracts.V1.Responses;
 using Microsoft.AspNetCore.Http;
 using Swashbuckle.AspNetCore.Filters;
 using System;
-using System.Collections.Generic;
 
 namespace DapperMappers.Api.SwaggerExamples
 {
@@ -11,7 +10,7 @@ namespace DapperMappers.Api.SwaggerExamples
     {
         public GetBookResponse GetExamples()
         {
-            BookResource bookResource = new BookResource
+            var bookResource = new BookResource
             {
                 Id = Guid.NewGuid().ToString(),
                 Title = "Hands-On Domain-Driven Design with .NET Core",
@@ -20,75 +19,79 @@ namespace DapperMappers.Api.SwaggerExamples
                 DateOfPublication = new DateTime(2019, 04, 30),
                 Authors = new BookAuthorsResource
                 {
-                    Authors = new List<AuthorResource>
-                    {
-                        new()
+                    Authors =
+                    [
+                        new AuthorResource
                         {
                             Name = "Alexey Zimarev",
                             Description = "Alexey Zimarev is a ..."
                         }
-                    }
+                    ]
                 },
                 TableOfContents = new BookTableOfContentsResource
                 {
-                    Chapters = new List<ChapterResource>
-                    {
-                        new()
+                    Chapters =
+                    [
+                        new ChapterResource
                         {
                             Number = "1",
                             Name = "Why Domain-Driven Design?",
-                            Subsections = new List<SubsectionResource>
-                            {
-                                new()
+                            Subsections =
+                            [
+                                new SubsectionResource
                                 {
                                     Number = "1",
                                     Name = "Understanding the problem"
                                 },
-                                new()
+
+                                new SubsectionResource
                                 {
                                     Number = "2",
                                     Name = "Dealing with complexity"
                                 }
-                            }
+                            ]
                         },
-                        new()
+
+                        new ChapterResource
                         {
                             Number = "2",
                             Name = "Language and Context"
                         },
-                        new()
+
+                        new ChapterResource
                         {
                             Number = "3",
                             Name = "EventStorming"
-                        },
-                    }
+                        }
+
+                    ]
                 },
                 ShortDescription = "Solve complex business problems...",
                 Description = new BookDescriptionResource
                 {
                     Learn = new LearnResource
                     {
-                        Points = new List<string>
-                        {
+                        Points =
+                        [
                             "Discover and...",
-                            "Avoid common...",
-                        }
+                            "Avoid common..."
+                        ]
                     },
                     About = @"Developers across the world...",
                     Features = new FeaturesResource
                     {
-                        Points = new List<string>
-                        {
+                        Points =
+                        [
                             "Apply DDD principles...",
-                            "Learn how DDD...",
-                        }
+                            "Learn how DDD..."
+                        ]
                     }
                 },
                 Publisher = "Packt",
                 Url = "https://www.packtpub.com/application-development/hands-domain-driven-design-net-core"
             };
 
-            GetBookResponse response = new GetBookResponse(bookResource, StatusCodes.Status200OK);
+            var response = new GetBookResponse(bookResource, StatusCodes.Status200OK);
             return response;
         }
     }

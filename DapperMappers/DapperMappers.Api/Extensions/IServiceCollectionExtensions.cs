@@ -9,11 +9,11 @@ namespace DapperMappers.Api.Extensions
 {
     public static class IServiceCollectionExtensions
     {
-        public static IServiceCollection AddSwagger<T>(this IServiceCollection services, bool includeXmlComments = false,
+        public static IServiceCollection AddSwaggerGenAndSwaggerExamples<T>(this IServiceCollection services, bool includeXmlComments = false,
             string name = "v1", string title = "My API", string version = "v1")
-            => AddSwagger<T>(services, typeof(T).Assembly, includeXmlComments, name, title, version);
+            => AddSwaggerGenAndSwaggerExamples<T>(services, typeof(T).Assembly, includeXmlComments, name, title, version);
 
-        public static IServiceCollection AddSwagger<T>(this IServiceCollection services, Assembly assembly, bool includeXmlComments = false,
+        public static IServiceCollection AddSwaggerGenAndSwaggerExamples<T>(this IServiceCollection services, Assembly assembly, bool includeXmlComments = false,
             string name = "v1", string title = "My API", string version = "v1")
         {
             services.AddSwaggerGen(c =>

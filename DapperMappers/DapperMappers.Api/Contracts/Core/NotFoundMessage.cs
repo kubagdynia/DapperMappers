@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 
-namespace DapperMappers.Api.Contracts
+namespace DapperMappers.Api.Contracts.Core
 {
     public class NotFoundMessage : BaseResponse
     {

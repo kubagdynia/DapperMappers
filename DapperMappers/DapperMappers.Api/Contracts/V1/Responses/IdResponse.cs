@@ -2,13 +2,8 @@
 
 namespace DapperMappers.Api.Contracts.V1.Responses
 {
-    public class IdResponse
+    public record IdResponse(Guid Id)
     {
-        public Guid Id { get; private set; }
-
-        public IdResponse(Guid id)
-        {
-            Id = id;
-        }
+        public Guid Id { get; private set; } = Id;
     }
 }
