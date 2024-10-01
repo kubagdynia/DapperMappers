@@ -2,7 +2,6 @@
 using DapperMappers.Api.Contracts.V1.Resources;
 using Swashbuckle.AspNetCore.Filters;
 using System;
-using System.Collections.Generic;
 
 namespace DapperMappers.Api.SwaggerExamples
 {
@@ -10,7 +9,7 @@ namespace DapperMappers.Api.SwaggerExamples
     {
         public AddBookRequest GetExamples()
         {
-            AddBookRequest createBookResource = new AddBookRequest
+            var createBookResource = new AddBookRequest
             {
                 Title = "Hands-On Domain-Driven Design with .NET Core",
                 PageCount = 446,
@@ -18,86 +17,96 @@ namespace DapperMappers.Api.SwaggerExamples
                 DateOfPublication = new DateTime(2019, 04, 30),
                 Authors = new BookAuthorsResource
                 {
-                    Authors = new List<AuthorResource>
-                    {
-                        new()
+                    Authors =
+                    [
+                        new AuthorResource
                         {
                             Name = "Alexey Zimarev",
-                            Description = "Alexey Zimarev is a software architect with a present focus on domain models, Domain-Driven Design (DDD), event sourcing, message-driven systems and microservices, coaching, and mentoring. Alexey is also a contributor to several open source projects, such as RestSharp and MassTransit, and is the organizer of the DDD Norway meetup."
+                            Description =
+                                "Alexey Zimarev is a software architect with a present focus on domain models, Domain-Driven Design (DDD), event sourcing, message-driven systems and microservices, coaching, and mentoring. Alexey is also a contributor to several open source projects, such as RestSharp and MassTransit, and is the organizer of the DDD Norway meetup."
                         }
-                    }
+                    ]
                 },
                 TableOfContents = new BookTableOfContentsResource
                 {
-                    Chapters = new List<ChapterResource>
-                    {
-                        new()
+                    Chapters =
+                    [
+                        new ChapterResource
                         {
                             Number = "1",
                             Name = "Why Domain-Driven Design?",
-                            Subsections = new List<SubsectionResource>
-                            {
-                                new()
+                            Subsections =
+                            [
+                                new SubsectionResource
                                 {
                                     Number = "1",
                                     Name = "Understanding the problem"
                                 },
-                                new()
+
+                                new SubsectionResource
                                 {
                                     Number = "2",
                                     Name = "Dealing with complexity"
                                 },
-                                new()
+
+                                new SubsectionResource
                                 {
                                     Number = "3",
                                     Name = "Knowledge"
                                 },
-                                new()
+
+                                new SubsectionResource
                                 {
                                     Number = "4",
                                     Name = "Summary"
                                 },
-                                new()
+
+                                new SubsectionResource
                                 {
                                     Number = "5",
                                     Name = "Further reading"
                                 }
-                            }
+                            ]
                         },
-                        new()
+
+                        new ChapterResource
                         {
                             Number = "2",
                             Name = "Language and Context"
                         },
-                        new()
+
+                        new ChapterResource
                         {
                             Number = "2",
                             Name = "Language and Context"
                         },
-                        new()
+
+                        new ChapterResource
                         {
                             Number = "3",
                             Name = "EventStorming"
                         },
-                        new()
+
+                        new ChapterResource
                         {
                             Number = "4",
                             Name = "Designing the Model"
                         },
-                        new()
+
+                        new ChapterResource
                         {
                             Number = "5",
                             Name = "Implementing the Model"
                         }
-                    }
+                    ]
                 },
                 ShortDescription = "Solve complex business problems by understanding users better, finding the right problem to solve, and building lean event-driven systems to give your customers what they really want",
                 Description = new BookDescriptionResource
                 {
                     Learn = new LearnResource
                     {
-                        Points = new List<string>
-                        {
+                        Points =
+                        [
                             "Discover and resolve domain complexity together with business stakeholders",
                             "Avoid common pitfalls when creating the domain model",
                             "Study the concept of Bounded Context and aggregate",
@@ -106,7 +115,7 @@ namespace DapperMappers.Api.SwaggerExamples
                             "Get acquainted with CQRS and to-the-point read models with projections",
                             "Practice building one-way flow UI with Vue.js",
                             "Understand how a task-based UI conforms to DDD principles"
-                        }
+                        ]
                     },
                     About = @"Developers across the world are rapidly adopting DDD principles to deliver powerful results when writing software that deals with complex business requirements.
 This book will guide you in involving business stakeholders when choosing the software you are planning to build for them.
@@ -122,12 +131,12 @@ In addition to this, you’ll learn how to refactor your code and cover event ve
 By the end of this DDD book, you will have gained the confidence to implement the DDD approach in your organization and be able to explore new techniques that complement what you’ve learned from the book.",
                     Features = new FeaturesResource
                     {
-                        Points = new List<string>
-                        {
+                        Points =
+                        [
                             "Apply DDD principles using modern tools such as EventStorming, Event Sourcing, and CQRS",
                             "Learn how DDD applies directly to various architectural styles such as REST, reactive systems, and microservices",
                             "Empower teams to work flexibly with improved services and decoupled interactions"
-                        }
+                        ]
                     }
                 },
                 Publisher = "Packt",

@@ -80,68 +80,71 @@ namespace DapperMappers.Domain.Tests
                 DateOfPublication = new DateTime(2019, 01, 01),
                 Authors = new BookAuthors
                 {
-                    Authors = new List<Author>
-                    {
+                    Authors =
+                    [
                         new Author
                         {
                             Name = "First Test Author Name",
                             Description = "First Test Author Description"
                         },
+
                         new Author
                         {
                             Name = "Second Test Author Name",
                             Description = "Second Test Author Description"
                         }
-                    }
+                    ]
                 },
                 TableOfContents = new BookTableOfContents
                 {
-                    Chapters = new List<Chapter>
-                    {
+                    Chapters =
+                    [
                         new Chapter
                         {
                             Number = "1",
                             Name = "Chapter one",
-                            Subsections = new List<Subsection>
-                            {
+                            Subsections =
+                            [
                                 new Subsection
                                 {
                                     Number = "1",
                                     Name = "First subsection of chapter one"
                                 }
-                            }
+                            ]
                         },
+
                         new Chapter
                         {
                             Number = "2",
                             Name = "Chapter two",
-                            Subsections = new List<Subsection>
-                            {
+                            Subsections =
+                            [
                                 new Subsection
                                 {
                                     Number = "1",
                                     Name = "First subsection of chapter two"
                                 },
+
                                 new Subsection
                                 {
                                     Number = "2",
                                     Name = "Second subsection of chapter two"
                                 }
-                            }
+                            ]
                         }
-                    }
+                    ]
                 },
                 ShortDescription = "Test short description",
                 Description = new BookDescription
                 {
                     Learn = new Learn
                     {
-                        Points = new List<string> { "First learn point", "Second learn point" }
+                        Points = ["First learn point", "Second learn point"]
                     },
                     About = "Test about",
                     Features = new Features
                     {
-                        Points = new List<string> { "First feature point" }
+                        Points = ["First feature point"]
                     }
                 },
                 Publisher = "Test publisher",

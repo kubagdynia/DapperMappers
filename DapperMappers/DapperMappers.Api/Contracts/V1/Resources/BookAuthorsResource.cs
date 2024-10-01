@@ -2,12 +2,12 @@
 
 namespace DapperMappers.Api.Contracts.V1.Resources
 {
-    public class BookAuthorsResource
+    public record BookAuthorsResource
     {
         public List<AuthorResource> Authors { get; set; }
     }
 
-    public class AuthorResource
+    public record AuthorResource
     {
         public string Name { get; set; }
 

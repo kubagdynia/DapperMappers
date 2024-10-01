@@ -1,8 +1,8 @@
-﻿using DapperMappers.Api.Serializers;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Text.Json;
+using DapperMappers.Api.Serializers;
 
-namespace DapperMappers.Api.Contracts
+namespace DapperMappers.Api.Contracts.Core
 {
     public abstract class BaseResponse
     {
@@ -10,12 +10,9 @@ namespace DapperMappers.Api.Contracts
 
         public IList<Error>? Errors { get; private set; }
 
-        public void AddError(string code, string message, string details, string userMessage)
+        protected void AddError(string code, string message, string? details = null, string? userMessage = null)
         {
-            if (Errors == null)
-            {
-                Errors = new List<Error>();
-            }
+            Errors ??= new List<Error>();
 
             Errors.Add(new Error
             {
@@ -26,15 +23,8 @@ namespace DapperMappers.Api.Contracts
             });
         }
 
-        public void AddError(string code, string message)
-        {
-            AddError(code, message, null, null);
-        }
-
         public override string ToString()
-        {
-            return JsonSerializer.Serialize(this, BaseJsonOptions.GetJsonSerializerOptions);
-        }
+            => JsonSerializer.Serialize(this, BaseJsonOptions.GetJsonSerializerOptions);
     }
 
     public class Error

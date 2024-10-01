@@ -1,4 +1,5 @@
 ﻿using System;
+using DapperMappers.Api.Contracts.Core;
 
 namespace DapperMappers.Api.Contracts.V1.Responses
 {

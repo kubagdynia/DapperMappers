@@ -5,13 +5,9 @@ using Microsoft.Extensions.Configuration;
 
 namespace DapperMappers.Domain.Tests.DbConnection
 {
-    public class BookDbConnectionFactory : SqliteDbConnectionFactory
+    public class BookDbConnectionFactory(IConfiguration config, string connectionName)
+        : SqliteDbConnectionFactory(config, connectionName)
     {
-        public BookDbConnectionFactory(IConfiguration config, string connectionName) : base(config, connectionName)
-        {
-            
-        }
-
         protected override void CreateDb(IDbConnection dbConnection)
         {
             dbConnection.Execute(

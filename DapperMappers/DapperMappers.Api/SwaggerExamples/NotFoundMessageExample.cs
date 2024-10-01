@@ -1,4 +1,4 @@
-﻿using DapperMappers.Api.Contracts;
+﻿using DapperMappers.Api.Contracts.Core;
 using Swashbuckle.AspNetCore.Filters;
 
 namespace DapperMappers.Api.SwaggerExamples

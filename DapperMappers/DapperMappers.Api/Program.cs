@@ -1,32 +1,25 @@
+using System;
 using System.Text.Json.Serialization;
-using DapperMappers.Domain.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using DapperMappers.Api.Extensions;
 using DapperMappers.Api.Serializers;
 using DapperMappers.Domain.Extensions;
-using DapperMappers.Domain.Repositories.CommandQueries;
-using DbConnectionExtensions.DbConnection;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services
-    .AddAutoMapper(typeof(Program))
-    .AddSingleton<ICommandQuery, CommandQuery>()
+    .AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies())
     
-    //.AddTransient<IDbConnectionFactory, DbConnectionFactory>();
-    .AddTransient<IDbConnectionFactory>(x =>
-        ActivatorUtilities.CreateInstance<DbConnectionFactory>(x, "DefaultConnection"))
+    // register custom type handlers for Dapper (RegisterDapperCustomTypeHandlers)
+    .RegisterCustomTypeHandlers()
     
-    .AddScoped<IBookRepository, BookRepository>()
-    //.AddScoped<IBookRepository>(x =>
-    //     ActivatorUtilities.CreateInstance<BookRepository>(x, "DefaultConnection"));
-    
+    // Add domain services to the container
     .AddDomain()
     
-    .AddSwagger<Program>(includeXmlComments: true, name: "v1", title: "Book API", version: "v1")
+    .AddSwaggerGenAndSwaggerExamples<Program>(includeXmlComments: true, name: "v1", title: "Book API", version: "v1")
     
     .AddControllers().AddJsonOptions(options =>
     {
@@ -41,14 +34,12 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseDeveloperExceptionPage();
+    
+    app.UseSwagger();
+    app.UseSwaggerUI(opt => opt.SwaggerEndpoint(url: "/swagger/v1/swagger.json", name: "Book API V1"));
 }
 
 app.UseHttpsRedirection();
-app.UseRouting(); 
-
-app.UseAuthorization();
-
-app.UseCustomSwagger("/swagger/v1/swagger.json", "Book API V1");
 
 app.MapControllers();
 
