@@ -2,10 +2,9 @@
 using Swashbuckle.AspNetCore.Filters;
 using System;
 
-namespace DapperMappers.Api.SwaggerExamples
+namespace DapperMappers.Api.SwaggerExamples;
+
+public class DeleteBookRequestExample : IExamplesProvider<DeleteBookRequest>
 {
-    public class DeleteBookRequestExample : IExamplesProvider<DeleteBookRequest>
-    {
-        public DeleteBookRequest GetExamples() => new() { Id = Guid.NewGuid() };
-    }
+    public DeleteBookRequest GetExamples() => new() { Id = Guid.NewGuid() };
 }

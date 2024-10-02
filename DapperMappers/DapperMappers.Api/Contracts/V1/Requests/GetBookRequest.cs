@@ -1,14 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
 
-namespace DapperMappers.Api.Contracts.V1.Requests
+namespace DapperMappers.Api.Contracts.V1.Requests;
+
+public record GetBookRequest
 {
-    public record GetBookRequest
-    {
-        /// <summary>
-        /// Book id
-        /// </summary>
-        [FromRoute(Name = "id")]
-        public Guid Id { get; set; }
-    }
+    /// <summary>
+    /// Book id
+    /// </summary>
+    [FromRoute(Name = "id")]
+    public Guid Id { get; set; }
 }

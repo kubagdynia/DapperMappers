@@ -1,6 +1,7 @@
 ﻿using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using System.Data;
+using DbConnectionExtensions.DbConnection.Base;
 
 namespace DbConnectionExtensions.DbConnection
 {
