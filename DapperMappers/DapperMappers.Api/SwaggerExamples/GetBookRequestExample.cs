@@ -2,10 +2,9 @@
 using Swashbuckle.AspNetCore.Filters;
 using System;
 
-namespace DapperMappers.Api.SwaggerExamples
+namespace DapperMappers.Api.SwaggerExamples;
+
+public class GetBookRequestExample : IExamplesProvider<GetBookRequest>
 {
-    public class GetBookRequestExample : IExamplesProvider<GetBookRequest>
-    {
-        public GetBookRequest GetExamples() => new() { Id = Guid.NewGuid() };
-    }
+    public GetBookRequest GetExamples() => new() { Id = Guid.NewGuid() };
 }

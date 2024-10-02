@@ -3,13 +3,12 @@ using Microsoft.AspNetCore.Http;
 using Swashbuckle.AspNetCore.Filters;
 using System;
 
-namespace DapperMappers.Api.SwaggerExamples
+namespace DapperMappers.Api.SwaggerExamples;
+
+public class AddBookResponseExample : IExamplesProvider<AddBookResponse>
 {
-    public class AddBookResponseExample : IExamplesProvider<AddBookResponse>
+    public AddBookResponse GetExamples()
     {
-        public AddBookResponse GetExamples()
-        {
-            return new AddBookResponse(new IdResponse(Guid.NewGuid()), StatusCodes.Status201Created);
-        }
+        return new AddBookResponse(new IdResponse(Guid.NewGuid()), StatusCodes.Status201Created);
     }
 }

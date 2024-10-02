@@ -3,15 +3,15 @@ using Dapper;
 using DbConnectionExtensions.DbConnection;
 using Microsoft.Extensions.Configuration;
 
-namespace DapperMappers.Domain.Tests.DbConnection
+namespace DapperMappers.Domain.Tests.DbConnection;
+
+public class BookDbConnectionFactory(IConfiguration config, string connectionName)
+    : SqliteDbConnectionFactory(config, connectionName)
 {
-    public class BookDbConnectionFactory(IConfiguration config, string connectionName)
-        : SqliteDbConnectionFactory(config, connectionName)
+    protected override void CreateDb(IDbConnection dbConnection)
     {
-        protected override void CreateDb(IDbConnection dbConnection)
-        {
-            dbConnection.Execute(
-                @"CREATE TABLE Books
+        dbConnection.Execute(
+            @"CREATE TABLE Books
                 (
                     InternalId                          integer primary key AUTOINCREMENT,
                     Id                                  varchar(36) not null,
@@ -26,6 +26,5 @@ namespace DapperMappers.Domain.Tests.DbConnection
                     Publisher                           varchar(200) null,
                     Url                                 varchar(200) null
                 )");
-        }
     }
 }

@@ -1,7 +1,6 @@
-using System;
 using System.Data;
 
-namespace DbConnectionExtensions.DbConnection
+namespace DbConnectionExtensions.DbConnection.Base
 {
     public abstract class BaseDbConnectionFactory : IDbConnectionFactory
     {

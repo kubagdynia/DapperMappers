@@ -2,6 +2,7 @@
 using System;
 using System.Data;
 using System.IO;
+using DbConnectionExtensions.DbConnection.Base;
 using Microsoft.Extensions.Configuration;
 
 namespace DbConnectionExtensions.DbConnection

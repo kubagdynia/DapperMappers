@@ -1,6 +1,6 @@
 ﻿using System.Data;
 
-namespace DbConnectionExtensions.DbConnection
+namespace DbConnectionExtensions.DbConnection.Base
 {
     public interface IDbConnectionFactory
     {

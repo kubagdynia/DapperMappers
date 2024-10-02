@@ -1,17 +1,16 @@
 using Dapper.CustomTypeHandlers.TypeHandlers;
 using System.Collections.Generic;
 
-namespace DapperMappers.Domain.Models
+namespace DapperMappers.Domain.Models;
+
+public record BookAuthors : IXmlObjectType
 {
-    public class BookAuthors : IXmlObjectType
-    {
-        public List<Author> Authors  { get; set; }
-    }
+    public List<Author> Authors  { get; set; }
+}
 
-    public class Author
-    {
-        public string Name { get; set; }
+public record Author
+{
+    public string Name { get; set; }
 
-        public string Description { get; set; }
-    }
+    public string Description { get; set; }
 }

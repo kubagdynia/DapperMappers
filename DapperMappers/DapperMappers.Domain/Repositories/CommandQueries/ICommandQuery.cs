@@ -1,15 +1,14 @@
-﻿namespace DapperMappers.Domain.Repositories.CommandQueries
+﻿namespace DapperMappers.Domain.Repositories.CommandQueries;
+
+public interface ICommandQuery
 {
-    public interface ICommandQuery
-    {
-        string GetBookByInternalId { get; }
+    string GetBookByInternalId { get; }
 
-        string GetBookById { get; }
+    string GetBookById { get; }
 
-        string GetAllBooks { get; }
+    string GetAllBooks { get; }
 
-        string SaveBook { get; }
+    string SaveBook { get; }
 
-        string DeleteBook { get; }
-    }
+    string DeleteBook { get; }
 }

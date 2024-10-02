@@ -1,10 +1,9 @@
 ﻿using DapperMappers.Api.Contracts.Core;
 using Swashbuckle.AspNetCore.Filters;
 
-namespace DapperMappers.Api.SwaggerExamples
+namespace DapperMappers.Api.SwaggerExamples;
+
+public class NotFoundMessageExample : IExamplesProvider<NotFoundMessage>
 {
-    public class NotFoundMessageExample : IExamplesProvider<NotFoundMessage>
-    {
-        public NotFoundMessage GetExamples() => new("Not found");
-    }
+    public NotFoundMessage GetExamples() => new("Not found");
 }
