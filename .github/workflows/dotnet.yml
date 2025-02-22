@@ -21,18 +21,25 @@ jobs:
       working-directory: ./DapperMappers
 
     steps:
-    - uses: actions/checkout@v3
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v3
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Setup .NET 9.0.x
+      uses: actions/setup-dotnet@v4
       with:
-        dotnet-version: 8.0.x
-    - name: Restore dependencies
-      run: dotnet restore
+        dotnet-version: 9.0.x
+    
+    - name: List installed .NET SDKs
+      run: dotnet --list-sdks
+      
+    - name: Display dotnet version
+      run: dotnet --version
+    
+    - name: Build the project
+      run: dotnet build --configuration Release
       working-directory: ${{env.working-directory}}
-    - name: Build
-      run: dotnet build --no-restore
-      working-directory: ${{env.working-directory}}
-    - name: Test
-      run: dotnet test --no-build --verbosity normal
+      
+    - name: Run test
+      run: dotnet test --configuration Release --no-build --verbosity normal
       working-directory: ${{env.working-directory}}
 
