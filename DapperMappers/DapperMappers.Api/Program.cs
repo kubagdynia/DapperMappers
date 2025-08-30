@@ -11,7 +11,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services
-    .AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies())
+    .AddAutoMapper(_ => { }, AppDomain.CurrentDomain.GetAssemblies())
     
     // register custom type handlers for Dapper (RegisterDapperCustomTypeHandlers)
     .RegisterCustomTypeHandlers()
